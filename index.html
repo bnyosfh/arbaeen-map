@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>دليل المشاية - الأربعين</title>
+  <title>دليل مشاية الأربعين</title>
   <style>
     body {
       font-family: sans-serif;
@@ -18,6 +18,39 @@
       margin-bottom: 20px;
       text-align: center;
     }
+    input[type="text"] {
+      padding: 8px;
+      font-size: 16px;
+      margin: 0 auto 30px auto;
+      max-width: 600px;
+      display: block;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    #columns-container {
+      max-width: 600px;
+      margin: 0 auto 40px auto;
+    }
+    .column {
+      background: #fff;
+      padding: 15px 20px;
+      margin-bottom: 12px;
+      border-right: 5px solid #800000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      scroll-margin-top: 20px;
+      border-radius: 6px;
+    }
+    .column strong {
+      font-size: 18px;
+      color: #550000;
+    }
+    .services {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #333;
+    }
+    /* شعار أسفل الصفحة */
     #logo-container {
       position: fixed;
       bottom: 10px;
@@ -30,11 +63,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
+      gap: 2px;
       z-index: 9999;
       font-weight: bold;
       font-family: sans-serif;
-      font-size: 14px;
+      font-size: 12px;
       color: #800000;
     }
     #logo-container img {
@@ -42,71 +75,28 @@
       width: auto;
       display: block;
     }
-    #search {
-      max-width: 600px;
-      display: block;
-      margin: 0 auto 30px auto;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      box-sizing: border-box;
-    }
-    .column {
-      background: #fff;
-      padding: 15px 20px;
-      margin-bottom: 12px;
-      border-right: 5px solid #800000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      scroll-margin-top: 20px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      border-radius: 6px;
-    }
-    .column strong {
-      font-size: 18px;
-      color: #550000;
-    }
-    .services {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #333;
+    #logo-container span {
+      color: #000;
+      font-size: 10px;
     }
   </style>
 </head>
 <body>
+
   <!-- شعار @khademcrs أسفل الصفحة -->
   <div id="logo-container">
     <img src="logo.png" alt="شعار Khadem" />
     <span>@khademcrs</span>
   </div>
 
-<h1>🏴 دليل مشاية الأربعين 🏴</h1>
+  <h1>🏴 دليل مشاية الأربعين 🏴</h1>
 
   <input type="text" id="search" placeholder="ابحث برقم العمود، الاسم، أو الخدمات..." />
 
   <div id="columns-container"></div>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCBbAQCvFL3wG9H1VDcx3DdD5PnIHPyFNI",
-      authDomain: "arbaeen-map-94225.firebaseapp.com",
-      projectId: "arbaeen-map-94225",
-      storageBucket: "arbaeen-map-94225.appspot.com",
-      messagingSenderId: "387779898784",
-      appId: "1:387779898784:web:1c14c5fd2af124ae7208c5",
-      measurementId: "G-WRNN6TLZE5"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-  </script>
-
-  <script>
+    // بيانات الأعمدة مؤقتاً من data.json (لا تخزن التغييرات)
     let columnsData = [];
 
     async function loadData() {
@@ -131,9 +121,9 @@
 
         const servicesText = col.services.length > 0 ? 'الخدمات: ' + col.services.join('، ') : 'لا توجد خدمات مضافة';
 
+        // الدولة جزء من اسم المضيف أو الموكب، لذلك تكتب ضمن الاسم
         colDiv.innerHTML = `
           <strong>العمود ${col.column}:</strong> ${col.name} <br/>
-          <small>الدولة: ${col.country}</small>
           <div class="services">${servicesText}</div>
         `;
 
