@@ -18,12 +18,24 @@
       margin-bottom: 20px;
       text-align: center;
     }
-    input[type="text"] {
-      width: 100%;
-      padding: 10px;
+    input[type="text"], input[type="number"] {
+      padding: 8px;
       font-size: 16px;
-      margin-bottom: 20px;
+      margin: 5px 0 10px 0;
+      width: 100%;
       box-sizing: border-box;
+    }
+    button {
+      background-color: #800000;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #aa0000;
     }
     .column {
       background: #fff;
@@ -50,21 +62,34 @@
       font-size: 14px;
       margin-left: 10px;
     }
-    .add-service button {
-      padding: 6px 10px;
-      font-size: 14px;
-      background-color: #800000;
-      color: white;
-      border: none;
-      cursor: pointer;
+    #add-column-form {
+      background: #fff;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      border-right: 5px solid #005500;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    .add-service button:hover {
-      background-color: #aa0000;
+    #add-column-form h2 {
+      margin-top: 0;
+      color: #005500;
     }
   </style>
 </head>
 <body>
   <h1>🏴 دليل المشاية من النجف إلى كربلاء 🏴</h1>
+
+  <div id="add-column-form">
+    <h2>إضافة عمود جديد</h2>
+    <label>رقم العمود:</label>
+    <input type="number" id="new-column-number" placeholder="أدخل رقم العمود" />
+    <label>اسم العمود:</label>
+    <input type="text" id="new-column-name" placeholder="أدخل اسم العمود" />
+    <label>الدولة:</label>
+    <input type="text" id="new-column-country" placeholder="أدخل اسم الدولة" />
+    <label>الخدمات (افصل بينها بفواصل):</label>
+    <input type="text" id="new-column-services" placeholder="مثال: مبيت، طعام، شراب" />
+    <button id="add-column-btn">أضف العمود</button>
+  </div>
 
   <input type="text" id="search" placeholder="ابحث برقم العمود أو الاسم..." />
 
@@ -73,14 +98,12 @@
   <script>
     let columnsData = [];
 
-    // جلب بيانات الأعمدة من ملف data.json
     async function loadData() {
       const res = await fetch('data.json');
       columnsData = await res.json();
       renderColumns(columnsData);
     }
 
-    // عرض الأعمدة بناء على مصفوفة البيانات
     function renderColumns(data) {
       const container = document.getElementById('columns-container');
       container.innerHTML = '';
@@ -106,7 +129,6 @@
           </div>
         `;
 
-        // زر إضافة الخدمة
         const input = colDiv.querySelector('input');
         const btn = colDiv.querySelector('button');
         btn.addEventListener('click', () => {
@@ -114,7 +136,7 @@
           if(val === '') return alert('اكتب اسم الخدمة أولاً');
           if(!col.services.includes(val)) {
             col.services.push(val);
-            renderColumns(data); // إعادة عرض لتحديث الخدمات
+            renderColumns(data);
           }
           input.value = '';
         });
@@ -123,7 +145,6 @@
       });
     }
 
-    // فلترة البيانات حسب البحث
     document.getElementById('search').addEventListener('input', e => {
       const q = e.target.value.trim().toLowerCase();
       if(q === '') {
@@ -134,6 +155,38 @@
         c.name.toLowerCase().includes(q) || c.column.toString().includes(q)
       );
       renderColumns(filtered);
+    });
+
+    document.getElementById('add-column-btn').addEventListener('click', () => {
+      const num = document.getElementById('new-column-number').value.trim();
+      const name = document.getElementById('new-column-name').value.trim();
+      const country = document.getElementById('new-column-country').value.trim();
+      const servicesText = document.getElementById('new-column-services').value.trim();
+
+      if(!num || !name || !country) {
+        return alert('رقم العمود، الاسم والدولة مطلوبة');
+      }
+
+      if(columnsData.some(c => c.column == num)) {
+        return alert('رقم العمود موجود بالفعل');
+      }
+
+      const newServices = servicesText ? servicesText.split(',').map(s => s.trim()).filter(s => s) : [];
+
+      columnsData.push({
+        column: Number(num),
+        name: name,
+        country: country,
+        services: newServices
+      });
+
+      // امسح الحقول
+      document.getElementById('new-column-number').value = '';
+      document.getElementById('new-column-name').value = '';
+      document.getElementById('new-column-country').value = '';
+      document.getElementById('new-column-services').value = '';
+
+      renderColumns(columnsData);
     });
 
     loadData();
