@@ -44,6 +44,15 @@
     .column strong {
       font-size: 18px;
       color: #550000;
+      display: block;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .column .name {
+      font-size: 18px;
+      color: #550000;
+      text-align: center;
+      margin-bottom: 10px;
     }
     .services {
       margin-top: 10px;
@@ -96,7 +105,6 @@
   <div id="columns-container"></div>
 
   <script>
-    // بيانات الأعمدة مؤقتاً من data.json (لا تخزن التغييرات)
     let columnsData = [];
 
     async function loadData() {
@@ -119,12 +127,12 @@
         colDiv.className = 'column';
         colDiv.id = 'column-' + col.column;
 
-        const servicesText = col.services.length > 0 ? 'الخدمات: ' + col.services.join('، ') : 'لا توجد خدمات مضافة';
+        const servicesText = col.services.length > 0 ? 'الخدمات: ' + col.services.join('، ') : '';
 
-        // الدولة جزء من اسم المضيف أو الموكب، لذلك تكتب ضمن الاسم
         colDiv.innerHTML = `
-          <strong>العمود ${col.column}:</strong> ${col.name} <br/>
-          <div class="services">${servicesText}</div>
+          <strong>العمود ${col.column}</strong>
+          <div class="name">${col.name}</div>
+          ${servicesText ? `<div class="services">${servicesText}</div>` : ''}
         `;
 
         container.appendChild(colDiv);
