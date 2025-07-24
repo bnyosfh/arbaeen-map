@@ -1,259 +1,264 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>دليل المشاية - الأربعين</title>
-<style>
-  body {
-    font-family: sans-serif;
-    background: #f9f9f9;
-    padding: 20px;
-    direction: rtl;
-    line-height: 1.5;
-  }
-  #logo-container {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 5px 10px;
-    border-radius: 6px;
-    box-shadow: 0 0 6px rgba(0,0,0,0.15);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: bold;
-    font-family: sans-serif;
-    font-size: 14px;
-    color: #800000;
-    z-index: 9999;
-  }
-  #logo-container img {
-    height: 24px;
-    width: auto;
-    display: block;
-  }
-  h1 {
-    color: #800000;
-    font-size: 28px;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  #toggle-add-column {
-    display: block;
-    margin: 0 auto 15px auto;
-    background-color: #800000;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  #toggle-add-column:hover {
-    background-color: #aa0000;
-  }
-  #add-column-form {
-    display: none;
-    background: #fff;
-    padding: 15px 20px;
-    margin-bottom: 20px;
-    border-right: 5px solid #005500;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 6px;
-  }
-  #add-column-form h2 {
-    margin-top: 0;
-    color: #005500;
-    text-align: center;
-  }
-  #add-column-form input[type="text"],
-  #add-column-form input[type="number"] {
-    padding: 8px;
-    font-size: 16px;
-    margin: 6px 0 12px 0;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  #add-column-form button {
-    background-color: #005500;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  #add-column-form button:hover {
-    background-color: #007700;
-  }
-  #search {
-    max-width: 600px;
-    display: block;
-    margin: 0 auto 25px auto;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
-  }
-  .column-item {
-    background: #fff;
-    padding: 12px 20px;
-    margin-bottom: 10px;
-    border-right: 6px solid #800000;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 6px;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.2s ease;
-  }
-  .column-item:hover {
-    background-color: #f0e6e6;
-  }
-  .column-header {
-    font-weight: bold;
-    font-size: 18px;
-    color: #550000;
-    display: flex;
-    justify-content: space-between;
-  }
-  .column-details {
-    margin-top: 10px;
-    font-size: 15px;
-    color: #333;
-    display: none;
-  }
-  .services-list {
-    margin-top: 8px;
-    list-style: none;
-    padding-left: 0;
-  }
-  .services-list li {
-    background: #eee;
-    padding: 6px 10px;
-    margin-bottom: 5px;
-    border-radius: 4px;
-  }
-  .add-service-container {
-    margin-top: 12px;
-    display: flex;
-    gap: 10px;
-  }
-  .add-service-container input[type="text"] {
-    flex-grow: 1;
-    padding: 6px 10px;
-    font-size: 14px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  .add-service-container button {
-    padding: 7px 15px;
-    background-color: #005500;
-    color: white;
-    border: none;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  .add-service-container button:hover {
-    background-color: #007700;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>دليل المشاية - الأربعين</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+      direction: rtl;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    h1 {
+      color: #800000;
+      font-size: 28px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    button {
+      background-color: #800000;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #aa0000;
+    }
+    input[type="text"], input[type="number"] {
+      padding: 8px;
+      font-size: 16px;
+      margin: 5px 0 10px 0;
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    #add-column-form {
+      display: none; /* مخفي افتراضياً */
+      background: #fff;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      border-right: 5px solid #005500;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 6px;
+    }
+    #add-column-form h2 {
+      margin-top: 0;
+      color: #005500;
+      text-align: center;
+    }
+    .column {
+      background: #fff;
+      padding: 15px 20px;
+      margin-bottom: 12px;
+      border-right: 5px solid #800000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      scroll-margin-top: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 6px;
+    }
+    .column strong {
+      font-size: 18px;
+      color: #550000;
+    }
+    .services {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #333;
+    }
+    .add-service {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+    }
+    .add-service input[type="text"] {
+      flex-grow: 1;
+      padding: 6px 8px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    #search {
+      max-width: 600px;
+      display: block;
+      margin: 0 auto 30px auto;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    /* الشعار أسفل الصفحة */
+    #logo-container {
+      max-width: 600px;
+      margin: 40px auto 10px auto;
+      text-align: center;
+      font-weight: bold;
+      font-family: sans-serif;
+      font-size: 14px;
+      color: #800000;
+    }
+    #logo-container img {
+      height: 50px;
+      width: auto;
+      display: block;
+      margin: 0 auto 6px auto;
+    }
+    /* زر إضافة عمود جديد أسفل الأعمدة */
+    #toggle-add-column {
+      display: block;
+      width: fit-content;
+      margin: 20px auto 0 auto;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
+  <h1>🏴 دليل المشاية من النجف إلى كربلاء 🏴</h1>
 
-<!-- شعار -->
-<div id="logo-container">
-  <img src="logo.png" alt="شعار خادم" />
-  <span>@khademcrs</span>
-</div>
+  <input type="text" id="search" placeholder="ابحث برقم العمود، الاسم، أو الخدمات..." />
 
-<h1>🏴 دليل مشاية الأربعين 🏴</h1>
+  <div id="columns-container"></div>
 
-<button id="toggle-add-column">أضف عمود جديد</button>
+  <button id="toggle-add-column">أضف عمود جديد</button>
 
-<div id="add-column-form">
-  <h2>إضافة عمود جديد</h2>
-  <label>رقم العمود:</label>
-  <input type="number" id="new-column-number" placeholder="أدخل رقم العمود" />
-  <label>اسم العمود:</label>
-  <input type="text" id="new-column-name" placeholder="أدخل اسم العمود" />
-  <label>الدولة:</label>
-  <input type="text" id="new-column-country" placeholder="أدخل اسم الدولة" />
-  <label>الخدمات (افصل بينها بفواصل):</label>
-  <input type="text" id="new-column-services" placeholder="مثال: مبيت، طعام، شراب" />
-  <button id="add-column-btn">أضف العمود</button>
-</div>
+  <div id="add-column-form">
+    <h2>إضافة عمود جديد</h2>
+    <label>رقم العمود:</label>
+    <input type="number" id="new-column-number" placeholder="أدخل رقم العمود" />
+    <label>اسم العمود:</label>
+    <input type="text" id="new-column-name" placeholder="أدخل اسم العمود" />
+    <label>الدولة:</label>
+    <input type="text" id="new-column-country" placeholder="أدخل اسم الدولة" />
+    <label>الخدمات (افصل بينها بفواصل):</label>
+    <input type="text" id="new-column-services" placeholder="مثال: مبيت، طعام، شراب" />
+    <button id="add-column-btn">أضف العمود</button>
+  </div>
 
-<input type="text" id="search" placeholder="ابحث برقم العمود، الاسم، أو الخدمات..." />
+  <div id="logo-container">
+    <img src="logo.png" alt="شعار khademcrs" />
+    <div>@khademcrs</div>
+  </div>
 
-<div id="columns-container"></div>
+  <script>
+    let columnsData = [];
 
-<script>
-  let columnsData = [];
-
-  // بيانات تجريبية أولية (يمكنك تحميل data.json بدلاً من هذه)
-  columnsData = [
-    { column: 1, name: "موكب عزاء الزهراء عليها السلام", country: "العراق", services: ["مبيت", "طعام", "دورة مياه"] },
-    { column: 95, name: "مضيف أهل الطيبة (لبنان)", country: "لبنان", services: ["طعام", "شراب"] },
-  ];
-
-  // فتح وغلق فورم إضافة عمود
-  document.getElementById('toggle-add-column').addEventListener('click', () => {
-    const form = document.getElementById('add-column-form');
-    form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
-  });
-
-  // عرض الأعمدة
-  function renderColumns(data) {
-    const container = document.getElementById('columns-container');
-    container.innerHTML = '';
-
-    if (data.length === 0) {
-      container.innerHTML = '<p style="text-align:center;">لا توجد نتائج.</p>';
-      return;
+    async function loadData() {
+      try {
+        const res = await fetch('data.json');
+        if (!res.ok) throw new Error('فشل تحميل البيانات');
+        columnsData = await res.json();
+      } catch {
+        columnsData = [];
+      }
+      renderColumns(columnsData);
     }
 
-    data.forEach(col => {
-      const colDiv = document.createElement('div');
-      colDiv.className = 'column-item';
+    function renderColumns(data) {
+      const container = document.getElementById('columns-container');
+      container.innerHTML = '';
 
-      colDiv.innerHTML = `
-        <div class="column-header">
-          <span>العمود ${col.column}</span>
-          <span>${col.name}</span>
-        </div>
-        <div class="column-details" id="details-${col.column}">
-          <div><strong>الدولة:</strong> ${col.country}</div>
-          <div><strong>الخدمات:</strong></div>
-          <ul class="services-list" id="services-list-${col.column}">
-            ${col.services.map(s => `<li>${s}</li>`).join('')}
-          </ul>
-          <div class="add-service-container">
-            <input type="text" placeholder="أضف خدمة جديدة" id="service-input-${col.column}" />
-            <button onclick="addService(${col.column})">أضف</button>
+      if (data.length === 0) {
+        container.innerHTML = '<p style="text-align:center;">لا توجد نتائج.</p>';
+        return;
+      }
+
+      data.forEach(col => {
+        const colDiv = document.createElement('div');
+        colDiv.className = 'column';
+        colDiv.id = 'column-' + col.column;
+
+        const servicesText = col.services.length > 0 ? 'الخدمات: ' + col.services.join('، ') : 'لا توجد خدمات مضافة';
+
+        colDiv.innerHTML = `
+          <strong>العمود ${col.column}:</strong> ${col.name} <br/>
+          <small>الدولة: ${col.country}</small>
+          <div class="services">${servicesText}</div>
+          <div class="add-service">
+            <input type="text" placeholder="أضف خدمة جديدة" />
+            <button>أضف</button>
           </div>
-        </div>
-      `;
+        `;
 
-      const detailsDiv = colDiv.querySelector('.column-details');
-      detailsDiv.style.display = 'none';
+        const input = colDiv.querySelector('input');
+        const btn = colDiv.querySelector('button');
+        btn.addEventListener('click', () => {
+          const val = input.value.trim();
+          if (val === '') return alert('اكتب اسم الخدمة أولاً');
+          if (!col.services.includes(val)) {
+            col.services.push(val);
+            renderColumns(columnsData);
+            document.getElementById('column-' + col.column).scrollIntoView({behavior: 'smooth', block: 'start'});
+          } else {
+            alert('الخدمة موجودة مسبقاً');
+          }
+          input.value = '';
+        });
 
-      colDiv.addEventListener('click', (e) => {
-        if(e.target.tagName.toLowerCase() === 'button' || e.target.tagName.toLowerCase() === 'input') return;
-        detailsDiv.style.display = detailsDiv.style.display === 'none' ? 'block' : 'none';
+        container.appendChild(colDiv);
       });
+    }
 
-      container.appendChild(colDiv);
+    document.getElementById('search').addEventListener('input', e => {
+      const q = e.target.value.trim().toLowerCase();
+
+      if (q === '') {
+        renderColumns(columnsData);
+        return;
+      }
+
+      const isNumber = !isNaN(q) && q !== '';
+
+      let filtered = [];
+
+      if (isNumber) {
+        filtered = columnsData.filter(c => c.column.toString() === q);
+        if (filtered.length === 1) {
+          renderColumns(filtered);
+          setTimeout(() => {
+            document.getElementById('column-' + q)?.scrollIntoView({behavior: 'smooth', block: 'start'});
+          }, 100);
+          return;
+        }
+      }
+
+      filtered = columnsData.filter(c =>
+        c.name.toLowerCase().includes(q) ||
+        c.column.toString().includes(q) ||
+        c.services.some(s => s.toLowerCase().includes(q))
+      );
+
+      renderColumns(filtered);
     });
-  }
 
-  function add
+    const toggleBtn = document.getElementById('toggle-add-column');
+    const addForm = document.getElementById('add-column-form');
+
+    toggleBtn.addEventListener('click', () => {
+      if (addForm.style.display === 'none' || addForm.style.display === '') {
+        addForm.style.display = 'block';
+        toggleBtn.textContent = 'إلغاء إضافة العمود';
+      } else {
+        addForm.style.display = 'none';
+        toggleBtn.textContent = 'أضف عمود جديد';
+      }
+    });
+
+    document.getElementById('add-column-btn').addEventListener('click', () => {
+      const num = document.get
