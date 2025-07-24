@@ -18,79 +18,6 @@
       margin-bottom: 20px;
       text-align: center;
     }
-    button {
-      background-color: #800000;
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-bottom: 15px;
-    }
-    button:hover {
-      background-color: #aa0000;
-    }
-    #toggle-add-column {
-      display: block;
-      margin: 0 auto 20px auto;
-      width: fit-content;
-      border-radius: 4px;
-    }
-    input[type="text"], input[type="number"] {
-      padding: 8px;
-      font-size: 16px;
-      margin: 5px 0 10px 0;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    #add-column-form {
-      display: none;
-      background: #fff;
-      padding: 15px 20px;
-      margin-bottom: 20px;
-      border-right: 5px solid #005500;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      border-radius: 6px;
-    }
-    #add-column-form h2 {
-      margin-top: 0;
-      color: #005500;
-      text-align: center;
-    }
-    .column {
-      background: #fff;
-      padding: 15px 20px;
-      margin-bottom: 12px;
-      border-right: 5px solid #800000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      scroll-margin-top: 20px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      border-radius: 6px;
-    }
-    .column strong {
-      font-size: 18px;
-      color: #550000;
-    }
-    .services {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #333;
-    }
-    .add-service {
-      margin-top: 10px;
-      display: flex;
-      gap: 8px;
-    }
-    .add-service input[type="text"] {
-      flex-grow: 1;
-      padding: 6px 8px;
-      font-size: 14px;
-    }
     #logo-container {
       position: fixed;
       bottom: 10px;
@@ -125,9 +52,26 @@
       border-radius: 6px;
       box-sizing: border-box;
     }
-    #add-column-form {
+    .column {
+      background: #fff;
+      padding: 15px 20px;
+      margin-bottom: 12px;
+      border-right: 5px solid #800000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      scroll-margin-top: 20px;
       max-width: 600px;
-      margin: 20px auto 40px auto;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 6px;
+    }
+    .column strong {
+      font-size: 18px;
+      color: #550000;
+    }
+    .services {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #333;
     }
   </style>
 </head>
@@ -144,24 +88,10 @@
 
   <div id="columns-container"></div>
 
-  <div id="add-column-form">
-    <h2>إضافة عمود جديد</h2>
-    <label>رقم العمود:</label>
-    <input type="number" id="new-column-number" placeholder="أدخل رقم العمود" />
-    <label>اسم العمود:</label>
-    <input type="text" id="new-column-name" placeholder="أدخل اسم العمود" />
-    <label>الدولة:</label>
-    <input type="text" id="new-column-country" placeholder="أدخل اسم الدولة" />
-    <label>الخدمات (افصل بينها بفواصل):</label>
-    <input type="text" id="new-column-services" placeholder="مثال: مبيت، طعام، شراب" />
-    <button id="add-column-btn">أضف العمود</button>
-  </div>
-
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
   <script>
-    // إعداد Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyCBbAQCvFL3wG9H1VDcx3DdD5PnIHPyFNI",
       authDomain: "arbaeen-map-94225.firebaseapp.com",
@@ -177,14 +107,12 @@
   </script>
 
   <script>
-    // بيانات الأعمدة مؤقتاً من data.json لكن لا تخزن التغييرات لأنك تحتاج قاعدة بيانات لاحقاً
     let columnsData = [];
 
     async function loadData() {
       const res = await fetch('data.json');
       columnsData = await res.json();
       renderColumns(columnsData);
-      document.getElementById('add-column-form').style.display = 'block'; // تظهر فور تحميل الأعمدة
     }
 
     function renderColumns(data) {
@@ -207,24 +135,7 @@
           <strong>العمود ${col.column}:</strong> ${col.name} <br/>
           <small>الدولة: ${col.country}</small>
           <div class="services">${servicesText}</div>
-          <div class="add-service">
-            <input type="text" placeholder="أضف خدمة جديدة" />
-            <button>أضف</button>
-          </div>
         `;
-
-        const input = colDiv.querySelector('input');
-        const btn = colDiv.querySelector('button');
-        btn.addEventListener('click', () => {
-          const val = input.value.trim();
-          if(val === '') return alert('اكتب اسم الخدمة أولاً');
-          if(!col.services.includes(val)) {
-            col.services.push(val);
-            renderColumns(columnsData);
-            document.getElementById('column-' + col.column).scrollIntoView({behavior: 'smooth', block: 'start'});
-          }
-          input.value = '';
-        });
 
         container.appendChild(colDiv);
       });
@@ -262,38 +173,7 @@
       renderColumns(filtered);
     });
 
-    document.getElementById('add-column-btn').addEventListener('click', () => {
-      const num = document.getElementById('new-column-number').value.trim();
-      const name = document.getElementById('new-column-name').value.trim();
-      const country = document.getElementById('new-column-country').value.trim();
-      const servicesText = document.getElementById('new-column-services').value.trim();
-
-      if(!num || !name || !country) {
-        return alert('رقم العمود، الاسم والدولة مطلوبة');
-      }
-
-      if(columnsData.some(c => c.column == num)) {
-        return alert('رقم العمود موجود بالفعل');
-      }
-
-      const newServices = servicesText ? servicesText.split(',').map(s => s.trim()).filter(s => s) : [];
-
-      columnsData.push({
-        column: Number(num),
-        name: name,
-        country: country,
-        services: newServices
-      });
-
-      document.getElementById('new-column-number').value = '';
-      document.getElementById('new-column-name').value = '';
-      document.getElementById('new-column-country').value = '';
-      document.getElementById('new-column-services').value = '';
-
-      renderColumns(columnsData);
-      document.getElementById('column-' + num).scrollIntoView({behavior: 'smooth', block: 'start'});
-    });
-
     loadData();
   </script>
 </body>
+</html>
