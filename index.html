@@ -11,9 +11,6 @@
       padding: 20px;
       direction: rtl;
       line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
     h1 {
       color: #800000;
@@ -34,6 +31,11 @@
     }
     button:hover {
       background-color: #aa0000;
+    }
+    #toggle-add-column {
+      display: block;
+      margin: 0 auto 20px auto;
+      width: fit-content;
     }
     input[type="text"], input[type="number"] {
       padding: 8px;
@@ -94,6 +96,29 @@
       border-radius: 4px;
       border: 1px solid #ccc;
     }
+    /* الشعار */
+    #logo-container {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 5px 12px;
+      border-radius: 6px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 9999;
+      font-weight: bold;
+      font-family: sans-serif;
+      font-size: 14px;
+      color: #800000;
+    }
+    #logo-container img {
+      height: 30px;
+      width: auto;
+      display: block;
+    }
     #search {
       max-width: 600px;
       display: block;
@@ -104,37 +129,16 @@
       border-radius: 6px;
       box-sizing: border-box;
     }
-    /* الشعار أسفل الصفحة */
-    #logo-container {
-      max-width: 600px;
-      margin: 40px auto 10px auto;
-      text-align: center;
-      font-weight: bold;
-      font-family: sans-serif;
-      font-size: 14px;
-      color: #800000;
-    }
-    #logo-container img {
-      height: 50px;
-      width: auto;
-      display: block;
-      margin: 0 auto 6px auto;
-    }
-    /* زر إضافة عمود جديد أسفل الأعمدة */
-    #toggle-add-column {
-      display: block;
-      width: fit-content;
-      margin: 20px auto 0 auto;
-      border-radius: 4px;
-    }
   </style>
 </head>
 <body>
+  <!-- الشعار -->
+  <div id="logo-container">
+    <img src="logo.png" alt="شعار تطوير خادم" />
+    <span>تطوير خادم لخدمة الشعائر</span>
+  </div>
+
   <h1>🏴 دليل المشاية من النجف إلى كربلاء 🏴</h1>
-
-  <input type="text" id="search" placeholder="ابحث برقم العمود، الاسم، أو الخدمات..." />
-
-  <div id="columns-container"></div>
 
   <button id="toggle-add-column">أضف عمود جديد</button>
 
@@ -151,10 +155,9 @@
     <button id="add-column-btn">أضف العمود</button>
   </div>
 
-  <div id="logo-container">
-    <img src="logo.png" alt="شعار khademcrs" />
-    <div>@khademcrs</div>
-  </div>
+  <input type="text" id="search" placeholder="ابحث برقم العمود، الاسم، أو الخدمات..." />
+
+  <div id="columns-container"></div>
 
   <script>
     let columnsData = [];
@@ -165,7 +168,7 @@
         if (!res.ok) throw new Error('فشل تحميل البيانات');
         columnsData = await res.json();
       } catch {
-        columnsData = [];
+        columnsData = []; // إذا ما في بيانات، خليها فاضية
       }
       renderColumns(columnsData);
     }
@@ -261,4 +264,40 @@
     });
 
     document.getElementById('add-column-btn').addEventListener('click', () => {
-      const num = document.get
+      const num = document.getElementById('new-column-number').value.trim();
+      const name = document.getElementById('new-column-name').value.trim();
+      const country = document.getElementById('new-column-country').value.trim();
+      const servicesText = document.getElementById('new-column-services').value.trim();
+
+      if (!num || !name || !country) {
+        return alert('رقم العمود، الاسم والدولة مطلوبة');
+      }
+
+      if (columnsData.some(c => c.column == num)) {
+        return alert('رقم العمود موجود بالفعل');
+      }
+
+      const newServices = servicesText ? servicesText.split(',').map(s => s.trim()).filter(s => s) : [];
+
+      columnsData.push({
+        column: Number(num),
+        name: name,
+        country: country,
+        services: newServices
+      });
+
+      renderColumns(columnsData);
+
+      document.getElementById('new-column-number').value = '';
+      document.getElementById('new-column-name').value = '';
+      document.getElementById('new-column-country').value = '';
+      document.getElementById('new-column-services').value = '';
+
+      addForm.style.display = 'none';
+      toggleBtn.textContent = 'أضف عمود جديد';
+    });
+
+    loadData();
+  </script>
+</body>
+</html>
