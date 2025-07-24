@@ -54,6 +54,9 @@
       text-align: center;
       margin-bottom: 10px;
     }
+    .column .name p {
+      margin: 2px 0;
+    }
     /* شعار أسفل الصفحة */
     #logo-container {
       position: fixed;
@@ -129,7 +132,9 @@
 
         colDiv.innerHTML = `
           <strong>العمود ${col.column}</strong>
-          <div class="name">${col.name}</div>
+          <div class="name">
+            ${col.names.map(name => `<p>${name}</p>`).join('')}
+          </div>
         `;
 
         container.appendChild(colDiv);
@@ -160,7 +165,7 @@
       }
 
       filtered = columnsData.filter(c => 
-        c.name.toLowerCase().includes(q) || 
+        c.names.some(name => name.toLowerCase().includes(q)) || 
         c.column.toString().includes(q)
       );
 
