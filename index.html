@@ -74,9 +74,38 @@
       margin-top: 0;
       color: #005500;
     }
+    /* إضافة تصميم الشعار */
+    #logo-container {
+      position: fixed;
+      top: 10px;
+      left: 10px; /* غيّر لـ right: 10px; إذا تبيها في الركن اليمين */
+      background: rgba(255, 255, 255, 0.9);
+      padding: 5px 12px;
+      border-radius: 6px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 9999;
+      font-weight: bold;
+      font-family: sans-serif;
+      font-size: 14px;
+      color: #800000;
+    }
+    #logo-container img {
+      height: 30px;
+      width: auto;
+      display: block;
+    }
   </style>
 </head>
 <body>
+  <!-- الشعار -->
+  <div id="logo-container">
+    <img src="logo.png" alt="شعار تطوير خادم" />
+    <span>تطوير خادم لخدمة الشعائر</span>
+  </div>
+
   <h1>🏴 دليل المشاية من النجف إلى كربلاء 🏴</h1>
 
   <div id="add-column-form">
@@ -139,7 +168,6 @@
           if(!col.services.includes(val)) {
             col.services.push(val);
             renderColumns(columnsData);
-            // بعد إعادة العرض، نعيد التركيز على العمود المضاف له الخدمة الجديدة
             document.getElementById('column-' + col.column).scrollIntoView({behavior: 'smooth', block: 'start'});
           }
           input.value = '';
@@ -162,10 +190,8 @@
       let filtered = [];
 
       if(isNumber) {
-        // لو البحث رقم بالضبط، نجيب العمود اللي رقمه يساوي الرقم
         filtered = columnsData.filter(c => c.column.toString() === q);
         if(filtered.length === 1) {
-          // نذهب تلقائياً للعمود إذا موجود واحد فقط
           renderColumns(filtered);
           setTimeout(() => {
             document.getElementById('column-' + q)?.scrollIntoView({behavior: 'smooth', block: 'start'});
@@ -174,7 +200,6 @@
         }
       }
 
-      // البحث العادي في الاسم، الرقم، والخدمات
       filtered = columnsData.filter(c => 
         c.name.toLowerCase().includes(q) || 
         c.column.toString().includes(q) ||
@@ -207,14 +232,12 @@
         services: newServices
       });
 
-      // امسح الحقول
       document.getElementById('new-column-number').value = '';
       document.getElementById('new-column-name').value = '';
       document.getElementById('new-column-country').value = '';
       document.getElementById('new-column-services').value = '';
 
       renderColumns(columnsData);
-      // نذهب للعمود الجديد مباشرة
       setTimeout(() => {
         document.getElementById('column-' + num)?.scrollIntoView({behavior: 'smooth', block: 'start'});
       }, 100);
