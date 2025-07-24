@@ -1,249 +1,299 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>دليل المشاية - الأربعين</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #f9f9f9;
-      padding: 20px;
-      direction: rtl;
-      line-height: 1.6;
-    }
-    h1 {
-      color: #800000;
-      font-size: 28px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    input[type="text"], input[type="number"] {
-      padding: 8px;
-      font-size: 16px;
-      margin: 5px 0 10px 0;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    button {
-      background-color: #800000;
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    button:hover {
-      background-color: #aa0000;
-    }
-    .column {
-      background: #fff;
-      padding: 15px 20px;
-      margin-bottom: 12px;
-      border-right: 5px solid #800000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      scroll-margin-top: 20px;
-    }
-    .column strong {
-      font-size: 18px;
-      color: #550000;
-    }
-    .services {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #333;
-    }
-    .add-service {
-      margin-top: 10px;
-    }
-    .add-service input[type="text"] {
-      width: 70%;
-      padding: 6px 8px;
-      font-size: 14px;
-      margin-left: 10px;
-    }
-    #add-column-form {
-      background: #fff;
-      padding: 15px 20px;
-      margin-bottom: 20px;
-      border-right: 5px solid #005500;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    #add-column-form h2 {
-      margin-top: 0;
-      color: #005500;
-    }
-    /* إضافة تصميم الشعار */
-    #logo-container {
-      position: fixed;
-      top: 10px;
-      left: 10px; /* غيّر لـ right: 10px; إذا تبيها في الركن اليمين */
-      background: rgba(255, 255, 255, 0.9);
-      padding: 5px 12px;
-      border-radius: 6px;
-      box-shadow: 0 0 6px rgba(0,0,0,0.2);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      z-index: 9999;
-      font-weight: bold;
-      font-family: sans-serif;
-      font-size: 14px;
-      color: #800000;
-    }
-    #logo-container img {
-      height: 30px;
-      width: auto;
-      display: block;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>دليل المشاية - الأربعين</title>
+<style>
+  body {
+    font-family: sans-serif;
+    background: #f9f9f9;
+    padding: 20px;
+    direction: rtl;
+    line-height: 1.5;
+  }
+  #logo-container {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 5px 10px;
+    border-radius: 6px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #800000;
+    z-index: 9999;
+  }
+  #logo-container img {
+    height: 24px;
+    width: auto;
+    display: block;
+  }
+  h1 {
+    color: #800000;
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  #toggle-add-column {
+    display: block;
+    margin: 0 auto 15px auto;
+    background-color: #800000;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  #toggle-add-column:hover {
+    background-color: #aa0000;
+  }
+  #add-column-form {
+    display: none;
+    background: #fff;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-right: 5px solid #005500;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 6px;
+  }
+  #add-column-form h2 {
+    margin-top: 0;
+    color: #005500;
+    text-align: center;
+  }
+  #add-column-form input[type="text"],
+  #add-column-form input[type="number"] {
+    padding: 8px;
+    font-size: 16px;
+    margin: 6px 0 12px 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  #add-column-form button {
+    background-color: #005500;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  #add-column-form button:hover {
+    background-color: #007700;
+  }
+  #search {
+    max-width: 600px;
+    display: block;
+    margin: 0 auto 25px auto;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+  .column-item {
+    background: #fff;
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    border-right: 6px solid #800000;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+  }
+  .column-item:hover {
+    background-color: #f0e6e6;
+  }
+  .column-header {
+    font-weight: bold;
+    font-size: 18px;
+    color: #550000;
+    display: flex;
+    justify-content: space-between;
+  }
+  .column-details {
+    margin-top: 10px;
+    font-size: 15px;
+    color: #333;
+    display: none;
+  }
+  .services-list {
+    margin-top: 8px;
+    list-style: none;
+    padding-left: 0;
+  }
+  .services-list li {
+    background: #eee;
+    padding: 6px 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+  }
+  .add-service-container {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+  }
+  .add-service-container input[type="text"] {
+    flex-grow: 1;
+    padding: 6px 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  .add-service-container button {
+    padding: 7px 15px;
+    background-color: #005500;
+    color: white;
+    border: none;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .add-service-container button:hover {
+    background-color: #007700;
+  }
+</style>
 </head>
 <body>
-  <!-- الشعار -->
-  <div id="logo-container">
-    <img src="logo.png" alt="شعار تطوير خادم" />
-    <span>تطوير خادم لخدمة الشعائر</span>
-  </div>
 
-  <h1>🏴 دليل المشاية من النجف إلى كربلاء 🏴</h1>
+<!-- شعار -->
+<div id="logo-container">
+  <img src="logo.png" alt="شعار خادم" />
+  <span>@khademcrs</span>
+</div>
 
-  <div id="add-column-form">
-    <h2>إضافة عمود جديد</h2>
-    <label>رقم العمود:</label>
-    <input type="number" id="new-column-number" placeholder="أدخل رقم العمود" />
-    <label>اسم العمود:</label>
-    <input type="text" id="new-column-name" placeholder="أدخل اسم العمود" />
-    <label>الدولة:</label>
-    <input type="text" id="new-column-country" placeholder="أدخل اسم الدولة" />
-    <label>الخدمات (افصل بينها بفواصل):</label>
-    <input type="text" id="new-column-services" placeholder="مثال: مبيت، طعام، شراب" />
-    <button id="add-column-btn">أضف العمود</button>
-  </div>
+<h1>🏴 دليل المشاية من النجف إلى كربلاء 🏴</h1>
 
-  <input type="text" id="search" placeholder="ابحث برقم العمود، الاسم، أو الخدمات..." />
+<button id="toggle-add-column">أضف عمود جديد</button>
 
-  <div id="columns-container"></div>
+<div id="add-column-form">
+  <h2>إضافة عمود جديد</h2>
+  <label>رقم العمود:</label>
+  <input type="number" id="new-column-number" placeholder="أدخل رقم العمود" />
+  <label>اسم العمود:</label>
+  <input type="text" id="new-column-name" placeholder="أدخل اسم العمود" />
+  <label>الدولة:</label>
+  <input type="text" id="new-column-country" placeholder="أدخل اسم الدولة" />
+  <label>الخدمات (افصل بينها بفواصل):</label>
+  <input type="text" id="new-column-services" placeholder="مثال: مبيت، طعام، شراب" />
+  <button id="add-column-btn">أضف العمود</button>
+</div>
 
-  <script>
-    let columnsData = [];
+<input type="text" id="search" placeholder="ابحث برقم العمود، الاسم، أو الخدمات..." />
 
-    async function loadData() {
-      const res = await fetch('data.json');
-      columnsData = await res.json();
-      renderColumns(columnsData);
+<div id="columns-container"></div>
+
+<script>
+  let columnsData = [];
+
+  async function loadData() {
+    const res = await fetch('data.json');
+    columnsData = await res.json();
+    renderColumns(columnsData);
+  }
+
+  function renderColumns(data) {
+    const container = document.getElementById('columns-container');
+    container.innerHTML = '';
+
+    if (data.length === 0) {
+      container.innerHTML = '<p style="text-align:center;">لا توجد نتائج.</p>';
+      return;
     }
 
-    function renderColumns(data) {
-      const container = document.getElementById('columns-container');
-      container.innerHTML = '';
+    data.forEach(col => {
+      const colDiv = document.createElement('div');
+      colDiv.className = 'column-item';
 
-      if(data.length === 0) {
-        container.innerHTML = '<p>لا توجد نتائج.</p>';
-        return;
-      }
-
-      data.forEach(col => {
-        const colDiv = document.createElement('div');
-        colDiv.className = 'column';
-        colDiv.id = 'column-' + col.column;
-
-        const servicesText = col.services.length > 0 ? 'الخدمات: ' + col.services.join('، ') : 'لا توجد خدمات مضافة';
-
-        colDiv.innerHTML = `
-          <strong>العمود ${col.column}:</strong> ${col.name} <br/>
-          <small>الدولة: ${col.country}</small>
-          <div class="services">${servicesText}</div>
-          <div class="add-service">
-            <input type="text" placeholder="أضف خدمة جديدة" />
-            <button>أضف</button>
+      // عنوان العمود فقط
+      colDiv.innerHTML = `
+        <div class="column-header">
+          <span>العمود ${col.column}</span>
+          <span>${col.name}</span>
+        </div>
+        <div class="column-details" id="details-${col.column}">
+          <div><strong>الدولة:</strong> ${col.country}</div>
+          <div><strong>الخدمات:</strong></div>
+          <ul class="services-list" id="services-list-${col.column}">
+            ${col.services.map(s => `<li>${s}</li>`).join('')}
+          </ul>
+          <div class="add-service-container">
+            <input type="text" placeholder="أضف خدمة جديدة" id="service-input-${col.column}" />
+            <button onclick="addService(${col.column})">أضف</button>
           </div>
-        `;
+        </div>
+      `;
 
-        const input = colDiv.querySelector('input');
-        const btn = colDiv.querySelector('button');
-        btn.addEventListener('click', () => {
-          const val = input.value.trim();
-          if(val === '') return alert('اكتب اسم الخدمة أولاً');
-          if(!col.services.includes(val)) {
-            col.services.push(val);
-            renderColumns(columnsData);
-            document.getElementById('column-' + col.column).scrollIntoView({behavior: 'smooth', block: 'start'});
-          }
-          input.value = '';
-        });
+      // إخفاء التفاصيل افتراضياً
+      const detailsDiv = colDiv.querySelector('.column-details');
+      detailsDiv.style.display = 'none';
 
-        container.appendChild(colDiv);
+      // عند الضغط على العنصر يفتح/يغلق التفاصيل
+      colDiv.addEventListener('click', (e) => {
+        // منع إغلاق التفاصيل عند الضغط على زر الإضافة
+        if(e.target.tagName.toLowerCase() === 'button' || e.target.tagName.toLowerCase() === 'input') return;
+
+        detailsDiv.style.display = detailsDiv.style.display === 'none' ? 'block' : 'none';
       });
+
+      container.appendChild(colDiv);
+    });
+  }
+
+  function addService(columnNumber) {
+    const input = document.getElementById(`service-input-${columnNumber}`);
+    const val = input.value.trim();
+    if (!val) return alert('اكتب اسم الخدمة أولاً');
+
+    const col = columnsData.find(c => c.column === columnNumber);
+    if (!col) return alert('العمود غير موجود');
+
+    if (col.services.includes(val)) {
+      alert('الخدمة موجودة مسبقاً');
+      input.value = '';
+      return;
     }
 
-    document.getElementById('search').addEventListener('input', e => {
-      const q = e.target.value.trim().toLowerCase();
+    col.services.push(val);
+    renderColumns(columnsData);
 
-      if(q === '') {
-        renderColumns(columnsData);
-        return;
-      }
+    // افتح تفاصيل العمود بعد إعادة العرض
+    setTimeout(() => {
+      const details = document.getElementById(`details-${columnNumber}`);
+      if(details) details.style.display = 'block';
+      const newInput = document.getElementById(`service-input-${columnNumber}`);
+      if(newInput) newInput.value = '';
+    }, 100);
+  }
 
-      const isNumber = !isNaN(q) && q !== '';
+  // البحث مع التصفية
+  document.getElementById('search').addEventListener('input', e => {
+    const q = e.target.value.trim().toLowerCase();
 
-      let filtered = [];
-
-      if(isNumber) {
-        filtered = columnsData.filter(c => c.column.toString() === q);
-        if(filtered.length === 1) {
-          renderColumns(filtered);
-          setTimeout(() => {
-            document.getElementById('column-' + q)?.scrollIntoView({behavior: 'smooth', block: 'start'});
-          }, 100);
-          return;
-        }
-      }
-
-      filtered = columnsData.filter(c => 
-        c.name.toLowerCase().includes(q) || 
-        c.column.toString().includes(q) ||
-        c.services.some(s => s.toLowerCase().includes(q))
-      );
-
-      renderColumns(filtered);
-    });
-
-    document.getElementById('add-column-btn').addEventListener('click', () => {
-      const num = document.getElementById('new-column-number').value.trim();
-      const name = document.getElementById('new-column-name').value.trim();
-      const country = document.getElementById('new-column-country').value.trim();
-      const servicesText = document.getElementById('new-column-services').value.trim();
-
-      if(!num || !name || !country) {
-        return alert('رقم العمود، الاسم والدولة مطلوبة');
-      }
-
-      if(columnsData.some(c => c.column == num)) {
-        return alert('رقم العمود موجود بالفعل');
-      }
-
-      const newServices = servicesText ? servicesText.split(',').map(s => s.trim()).filter(s => s) : [];
-
-      columnsData.push({
-        column: Number(num),
-        name: name,
-        country: country,
-        services: newServices
-      });
-
-      document.getElementById('new-column-number').value = '';
-      document.getElementById('new-column-name').value = '';
-      document.getElementById('new-column-country').value = '';
-      document.getElementById('new-column-services').value = '';
-
+    if (q === '') {
       renderColumns(columnsData);
-      setTimeout(() => {
-        document.getElementById('column-' + num)?.scrollIntoView({behavior: 'smooth', block: 'start'});
-      }, 100);
-    });
+      return;
+    }
 
-    loadData();
-  </script>
-</body>
-</html>
+    const isNumber = !isNaN(q) && q !== '';
+
+    let filtered = [];
+
+    if (isNumber) {
+      filtered = columnsData.filter(c => c.column.toString() === q);
+      if (filtered.length === 1) {
+        render
