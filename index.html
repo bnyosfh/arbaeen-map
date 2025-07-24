@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>دليل مشاية الأربعين</title>
+
+  <!-- فافيكون عادي -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <!-- أيقونة أبل للشاشة الرئيسية على iPhone -->
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
   <style>
     body {
       font-family: sans-serif;
@@ -50,14 +57,10 @@
     }
     .column .name {
       font-size: 18px;
-      color: #000000; /* هنا اللون الأسود */
+      color: #000000;
       text-align: center;
       margin-bottom: 10px;
     }
-    .column .name p {
-      margin: 2px 0;
-    }
-    /* شعار أسفل الصفحة */
     #logo-container {
       position: fixed;
       bottom: 10px;
@@ -90,7 +93,6 @@
 </head>
 <body>
 
-  <!-- شعار @khademcrs أسفل الصفحة -->
   <div id="logo-container">
     <img src="logo.png" alt="شعار Khadem" />
     <span>@khademcrs</span>
@@ -132,9 +134,7 @@
 
         colDiv.innerHTML = `
           <strong>العمود ${col.column}</strong>
-          <div class="name">
-            ${col.names.map(name => `<p>${name}</p>`).join('')}
-          </div>
+          <div class="name">${Array.isArray(col.names) ? col.names.join('<br>') : col.names}</div>
         `;
 
         container.appendChild(colDiv);
@@ -165,7 +165,7 @@
       }
 
       filtered = columnsData.filter(c => 
-        c.names.some(name => name.toLowerCase().includes(q)) || 
+        (Array.isArray(c.names) ? c.names.join(' ').toLowerCase() : c.names.toLowerCase()).includes(q) || 
         c.column.toString().includes(q)
       );
 
