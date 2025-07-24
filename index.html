@@ -26,8 +26,6 @@
       font-size: 16px;
       cursor: pointer;
       margin-bottom: 15px;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
     }
     button:hover {
       background-color: #aa0000;
@@ -36,6 +34,7 @@
       display: block;
       margin: 0 auto 20px auto;
       width: fit-content;
+      border-radius: 4px;
     }
     input[type="text"], input[type="number"] {
       padding: 8px;
@@ -43,11 +42,9 @@
       margin: 5px 0 10px 0;
       width: 100%;
       box-sizing: border-box;
-      border-radius: 4px;
-      border: 1px solid #ccc;
     }
     #add-column-form {
-      display: none; /* مخفي افتراضياً */
+      display: none;
       background: #fff;
       padding: 15px 20px;
       margin-bottom: 20px;
@@ -93,21 +90,20 @@
       flex-grow: 1;
       padding: 6px 8px;
       font-size: 14px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
     }
-    /* الشعار */
     #logo-container {
       position: fixed;
-      top: 10px;
-      left: 10px;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
       background: rgba(255, 255, 255, 0.9);
       padding: 5px 12px;
       border-radius: 6px;
       box-shadow: 0 0 6px rgba(0,0,0,0.2);
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 4px;
       z-index: 9999;
       font-weight: bold;
       font-family: sans-serif;
@@ -115,7 +111,7 @@
       color: #800000;
     }
     #logo-container img {
-      height: 30px;
+      height: 40px;
       width: auto;
       display: block;
     }
@@ -129,18 +125,24 @@
       border-radius: 6px;
       box-sizing: border-box;
     }
+    #add-column-form {
+      max-width: 600px;
+      margin: 20px auto 40px auto;
+    }
   </style>
 </head>
 <body>
-  <!-- الشعار -->
+  <!-- شعار @khademcrs أسفل الصفحة -->
   <div id="logo-container">
-    <img src="logo.png" alt="شعار تطوير خادم" />
-    <span> @khademcrs  </span>
+    <img src="logo.png" alt="شعار Khadem" />
+    <span>@khademcrs</span>
   </div>
 
-  <h1>🏴 دليل مشاية الأربعين 🏴</h1>
+  <h1>🏴 دليل المشاية من النجف إلى كربلاء 🏴</h1>
 
-  <button id="toggle-add-column">أضف عمود جديد</button>
+  <input type="text" id="search" placeholder="ابحث برقم العمود، الاسم، أو الخدمات..." />
+
+  <div id="columns-container"></div>
 
   <div id="add-column-form">
     <h2>إضافة عمود جديد</h2>
@@ -155,29 +157,41 @@
     <button id="add-column-btn">أضف العمود</button>
   </div>
 
-  <input type="text" id="search" placeholder="ابحث برقم العمود، الاسم، أو الخدمات..." />
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+  <script>
+    // إعداد Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCBbAQCvFL3wG9H1VDcx3DdD5PnIHPyFNI",
+      authDomain: "arbaeen-map-94225.firebaseapp.com",
+      projectId: "arbaeen-map-94225",
+      storageBucket: "arbaeen-map-94225.appspot.com",
+      messagingSenderId: "387779898784",
+      appId: "1:387779898784:web:1c14c5fd2af124ae7208c5",
+      measurementId: "G-WRNN6TLZE5"
+    };
 
-  <div id="columns-container"></div>
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
 
   <script>
+    // بيانات الأعمدة مؤقتاً من data.json لكن لا تخزن التغييرات لأنك تحتاج قاعدة بيانات لاحقاً
     let columnsData = [];
 
     async function loadData() {
-      try {
-        const res = await fetch('data.json');
-        if (!res.ok) throw new Error('فشل تحميل البيانات');
-        columnsData = await res.json();
-      } catch {
-        columnsData = []; // إذا ما في بيانات، خليها فاضية
-      }
+      const res = await fetch('data.json');
+      columnsData = await res.json();
       renderColumns(columnsData);
+      document.getElementById('add-column-form').style.display = 'block'; // تظهر فور تحميل الأعمدة
     }
 
     function renderColumns(data) {
       const container = document.getElementById('columns-container');
       container.innerHTML = '';
 
-      if (data.length === 0) {
+      if(data.length === 0) {
         container.innerHTML = '<p style="text-align:center;">لا توجد نتائج.</p>';
         return;
       }
@@ -203,13 +217,11 @@
         const btn = colDiv.querySelector('button');
         btn.addEventListener('click', () => {
           const val = input.value.trim();
-          if (val === '') return alert('اكتب اسم الخدمة أولاً');
-          if (!col.services.includes(val)) {
+          if(val === '') return alert('اكتب اسم الخدمة أولاً');
+          if(!col.services.includes(val)) {
             col.services.push(val);
             renderColumns(columnsData);
             document.getElementById('column-' + col.column).scrollIntoView({behavior: 'smooth', block: 'start'});
-          } else {
-            alert('الخدمة موجودة مسبقاً');
           }
           input.value = '';
         });
@@ -221,7 +233,7 @@
     document.getElementById('search').addEventListener('input', e => {
       const q = e.target.value.trim().toLowerCase();
 
-      if (q === '') {
+      if(q === '') {
         renderColumns(columnsData);
         return;
       }
@@ -230,9 +242,9 @@
 
       let filtered = [];
 
-      if (isNumber) {
+      if(isNumber) {
         filtered = columnsData.filter(c => c.column.toString() === q);
-        if (filtered.length === 1) {
+        if(filtered.length === 1) {
           renderColumns(filtered);
           setTimeout(() => {
             document.getElementById('column-' + q)?.scrollIntoView({behavior: 'smooth', block: 'start'});
@@ -241,26 +253,13 @@
         }
       }
 
-      filtered = columnsData.filter(c =>
-        c.name.toLowerCase().includes(q) ||
+      filtered = columnsData.filter(c => 
+        c.name.toLowerCase().includes(q) || 
         c.column.toString().includes(q) ||
         c.services.some(s => s.toLowerCase().includes(q))
       );
 
       renderColumns(filtered);
-    });
-
-    const toggleBtn = document.getElementById('toggle-add-column');
-    const addForm = document.getElementById('add-column-form');
-
-    toggleBtn.addEventListener('click', () => {
-      if (addForm.style.display === 'none' || addForm.style.display === '') {
-        addForm.style.display = 'block';
-        toggleBtn.textContent = 'إلغاء إضافة العمود';
-      } else {
-        addForm.style.display = 'none';
-        toggleBtn.textContent = 'أضف عمود جديد';
-      }
     });
 
     document.getElementById('add-column-btn').addEventListener('click', () => {
@@ -269,11 +268,11 @@
       const country = document.getElementById('new-column-country').value.trim();
       const servicesText = document.getElementById('new-column-services').value.trim();
 
-      if (!num || !name || !country) {
+      if(!num || !name || !country) {
         return alert('رقم العمود، الاسم والدولة مطلوبة');
       }
 
-      if (columnsData.some(c => c.column == num)) {
+      if(columnsData.some(c => c.column == num)) {
         return alert('رقم العمود موجود بالفعل');
       }
 
@@ -286,18 +285,15 @@
         services: newServices
       });
 
-      renderColumns(columnsData);
-
       document.getElementById('new-column-number').value = '';
       document.getElementById('new-column-name').value = '';
       document.getElementById('new-column-country').value = '';
       document.getElementById('new-column-services').value = '';
 
-      addForm.style.display = 'none';
-      toggleBtn.textContent = 'أضف عمود جديد';
+      renderColumns(columnsData);
+      document.getElementById('column-' + num).scrollIntoView({behavior: 'smooth', block: 'start'});
     });
 
     loadData();
   </script>
 </body>
-</html>
