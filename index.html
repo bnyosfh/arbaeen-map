@@ -200,12 +200,19 @@
 <script>
   let columnsData = [];
 
-  async function loadData() {
-    const res = await fetch('data.json');
-    columnsData = await res.json();
-    renderColumns(columnsData);
-  }
+  // بيانات تجريبية أولية (يمكنك تحميل data.json بدلاً من هذه)
+  columnsData = [
+    { column: 1, name: "موكب عزاء الزهراء عليها السلام", country: "العراق", services: ["مبيت", "طعام", "دورة مياه"] },
+    { column: 95, name: "مضيف أهل الطيبة (لبنان)", country: "لبنان", services: ["طعام", "شراب"] },
+  ];
 
+  // فتح وغلق فورم إضافة عمود
+  document.getElementById('toggle-add-column').addEventListener('click', () => {
+    const form = document.getElementById('add-column-form');
+    form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+  });
+
+  // عرض الأعمدة
   function renderColumns(data) {
     const container = document.getElementById('columns-container');
     container.innerHTML = '';
@@ -219,7 +226,6 @@
       const colDiv = document.createElement('div');
       colDiv.className = 'column-item';
 
-      // عنوان العمود فقط
       colDiv.innerHTML = `
         <div class="column-header">
           <span>العمود ${col.column}</span>
@@ -238,15 +244,11 @@
         </div>
       `;
 
-      // إخفاء التفاصيل افتراضياً
       const detailsDiv = colDiv.querySelector('.column-details');
       detailsDiv.style.display = 'none';
 
-      // عند الضغط على العنصر يفتح/يغلق التفاصيل
       colDiv.addEventListener('click', (e) => {
-        // منع إغلاق التفاصيل عند الضغط على زر الإضافة
         if(e.target.tagName.toLowerCase() === 'button' || e.target.tagName.toLowerCase() === 'input') return;
-
         detailsDiv.style.display = detailsDiv.style.display === 'none' ? 'block' : 'none';
       });
 
@@ -254,46 +256,4 @@
     });
   }
 
-  function addService(columnNumber) {
-    const input = document.getElementById(`service-input-${columnNumber}`);
-    const val = input.value.trim();
-    if (!val) return alert('اكتب اسم الخدمة أولاً');
-
-    const col = columnsData.find(c => c.column === columnNumber);
-    if (!col) return alert('العمود غير موجود');
-
-    if (col.services.includes(val)) {
-      alert('الخدمة موجودة مسبقاً');
-      input.value = '';
-      return;
-    }
-
-    col.services.push(val);
-    renderColumns(columnsData);
-
-    // افتح تفاصيل العمود بعد إعادة العرض
-    setTimeout(() => {
-      const details = document.getElementById(`details-${columnNumber}`);
-      if(details) details.style.display = 'block';
-      const newInput = document.getElementById(`service-input-${columnNumber}`);
-      if(newInput) newInput.value = '';
-    }, 100);
-  }
-
-  // البحث مع التصفية
-  document.getElementById('search').addEventListener('input', e => {
-    const q = e.target.value.trim().toLowerCase();
-
-    if (q === '') {
-      renderColumns(columnsData);
-      return;
-    }
-
-    const isNumber = !isNaN(q) && q !== '';
-
-    let filtered = [];
-
-    if (isNumber) {
-      filtered = columnsData.filter(c => c.column.toString() === q);
-      if (filtered.length === 1) {
-        render
+  function add
