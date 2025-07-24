@@ -43,6 +43,7 @@
       margin-bottom: 12px;
       border-right: 5px solid #800000;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      scroll-margin-top: 20px;
     }
     .column strong {
       font-size: 18px;
@@ -91,7 +92,7 @@
     <button id="add-column-btn">أضف العمود</button>
   </div>
 
-  <input type="text" id="search" placeholder="ابحث برقم العمود أو الاسم..." />
+  <input type="text" id="search" placeholder="ابحث برقم العمود، الاسم، أو الخدمات..." />
 
   <div id="columns-container"></div>
 
@@ -116,6 +117,7 @@
       data.forEach(col => {
         const colDiv = document.createElement('div');
         colDiv.className = 'column';
+        colDiv.id = 'column-' + col.column;
 
         const servicesText = col.services.length > 0 ? 'الخدمات: ' + col.services.join('، ') : 'لا توجد خدمات مضافة';
 
@@ -136,7 +138,9 @@
           if(val === '') return alert('اكتب اسم الخدمة أولاً');
           if(!col.services.includes(val)) {
             col.services.push(val);
-            renderColumns(data);
+            renderColumns(columnsData);
+            // بعد إعادة العرض، نعيد التركيز على العمود المضاف له الخدمة الجديدة
+            document.getElementById('column-' + col.column).scrollIntoView({behavior: 'smooth', block: 'start'});
           }
           input.value = '';
         });
@@ -147,13 +151,36 @@
 
     document.getElementById('search').addEventListener('input', e => {
       const q = e.target.value.trim().toLowerCase();
+
       if(q === '') {
         renderColumns(columnsData);
         return;
       }
-      const filtered = columnsData.filter(c => 
-        c.name.toLowerCase().includes(q) || c.column.toString().includes(q)
+
+      const isNumber = !isNaN(q) && q !== '';
+
+      let filtered = [];
+
+      if(isNumber) {
+        // لو البحث رقم بالضبط، نجيب العمود اللي رقمه يساوي الرقم
+        filtered = columnsData.filter(c => c.column.toString() === q);
+        if(filtered.length === 1) {
+          // نذهب تلقائياً للعمود إذا موجود واحد فقط
+          renderColumns(filtered);
+          setTimeout(() => {
+            document.getElementById('column-' + q)?.scrollIntoView({behavior: 'smooth', block: 'start'});
+          }, 100);
+          return;
+        }
+      }
+
+      // البحث العادي في الاسم، الرقم، والخدمات
+      filtered = columnsData.filter(c => 
+        c.name.toLowerCase().includes(q) || 
+        c.column.toString().includes(q) ||
+        c.services.some(s => s.toLowerCase().includes(q))
       );
+
       renderColumns(filtered);
     });
 
@@ -187,6 +214,10 @@
       document.getElementById('new-column-services').value = '';
 
       renderColumns(columnsData);
+      // نذهب للعمود الجديد مباشرة
+      setTimeout(() => {
+        document.getElementById('column-' + num)?.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }, 100);
     });
 
     loadData();
