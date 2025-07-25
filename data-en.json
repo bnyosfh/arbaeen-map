@@ -1,445 +1,475 @@
 [
   {
     "column": 1,
-    "names": ["Al-Zahraa Mourning Procession"],
+    "names": ["Mawkib Azzaa Al-Zahra (AS)"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 6,
-    "names": ["Reyhaneh Al-Mustafa Procession"],
+    "names": ["Mawkib Rayhanat Al-Mustafa"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 70,
-    "names": ["Najaf–Karbala Checkpoint"],
+    "names": ["Control Najaf – Karbala"],
+    "country": "Iraq",
+    "services": []
+  },
+  {
+    "column": 72,
+    "names": ["Missing Persons Center"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 90,
-    "names": ["Al-Manathera Hospital"],
+    "names": ["Al-Munadhara Hospital"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 95,
-    "names": ["Ahl Al-Taybeh Rest Stop (Lebanon)"],
+    "names": ["Ahl Al-Taybah Guesthouse (Lebanon)"],
     "country": "Lebanon",
     "services": []
   },
   {
     "column": 107,
-    "names": ["Al-Houli Junction to Najaf Airport"],
+    "names": ["Al-Hawali Crossroad to Najaf Airport"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 134,
-    "names": ["Lovers of Imam Hussein Hussainiya"],
+    "names": ["Husseiniyat Ahbab Imam Hussein (AS)"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 160,
-    "names": ["Shabab Al-Hussein Hussainiya"],
+    "names": ["Mawkib and Husseiniyat Youth of Imam Hussein (AS)"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 163,
-    "names": ["Jabir Al-Ansari Hussainiya"],
+    "names": ["Husseiniyat Jabir Al-Ansari"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 208,
-    "names": ["Holy Abbas Shrine Procession"],
+    "names": ["Mawkib and Guesthouse of the Abbas Holy Shrine"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 209,
-    "names": ["Hussainiya Processions"],
+    "names": ["Mawkib and Husseiniyats"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 210,
-    "names": ["Al-Alaq Sayyids Hussainiya"],
+    "names": ["Mawkib and Husseiniyat Al-Sadah Al-Allaq"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 256,
-    "names": ["Hussainiya Processions"],
+    "names": ["Mawkib and Husseiniyats"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 287,
-    "names": ["Imam Al-Ridha Procession"],
+    "names": ["Mawkib Imam Al-Ridha (AS)"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 290,
-    "names": ["Hussainiya Processions"],
+    "names": ["Mawkib and Husseiniyats"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 300,
-    "names": ["Mirza Jawad Tabrizi Hussainiya"],
+    "names": ["Husseiniyat Mirza Jawad Al-Tabrizi"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 309,
-    "names": ["Al-Sawafi Camp (Overnight Stay)"],
+    "names": ["Al-Sawafi Camp (for accommodation)"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 313,
-    "names": ["Al-Juhaysh Tribe Procession"],
+    "names": ["Mawkib Ashira Al-Juhaysh"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 324,
-    "names": ["Al-Aqari Sayyids Hussainiya"],
+    "names": ["Husseiniyat and Mawkib Al-Sadah Al-Aqareen"],
+    "country": "Iraq",
+    "services": []
+  },
+  {
+    "column": 335,
+    "names": ["Missing Persons Center"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 337,
-    "names": ["Lady Fatima Al-Zahraa Rest Stop (Lebanon)"],
+    "names": ["Guesthouse of Lady Fatima Al-Zahra (AS) (Lebanon)"],
     "country": "Lebanon",
     "services": []
   },
   {
     "column": 338,
-    "names": ["Thaqalayn Hussainiya (Lebanon)"],
+    "names": ["Mawkib Husseiniyat Al-Thaqalin (Lebanon)"],
     "country": "Lebanon",
     "services": []
   },
   {
     "column": 344,
-    "names": ["Imam Al-Sadiq Hussainiya (Bahrain) – Left Side (Overnight)"],
+    "names": ["Husseiniyat Imam Al-Sadiq (AS) for Bahrainis, left direction (accommodation)"],
     "country": "Bahrain",
     "services": []
   },
   {
     "column": 350,
-    "names": ["Kifl Junction Checkpoint + Fuel Station"],
+    "names": ["Control Kifl Crossroad + Gas Station"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 360,
-    "names": ["Darb Al-Hussein Rest Stop (Lebanon)"],
+    "names": ["Guesthouse Darb Al-Hussain (Lebanon)"],
     "country": "Lebanon",
     "services": []
   },
   {
     "column": 370,
-    "names": ["Zahraa Servants Procession"],
+    "names": ["Mawkib Khuddam Al-Zahra (AS)"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 395,
-    "names": ["Fatimiya Hussainiya (Lebanon)"],
+    "names": ["Husseiniyat Al-Fatimiya (Lebanon)"],
     "country": "Lebanon",
     "services": []
   },
   {
     "column": 400,
-    "names": ["Hamidah Bint Muslim Rest Stop (Iraqis)"],
+    "names": ["Guesthouse Hamida Bint Muslim (People of Iraq)"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 401,
-    "names": ["Ashaq Al-Hussein Rest Stop (Qatif)"],
+    "names": ["Guesthouse Lovers of Hussein (AS) (Qatif)"],
     "country": "Saudi Arabia",
     "services": []
   },
   {
     "column": 409,
-    "names": ["Thar Allah Rest Stop (Lebanon) #1"],
+    "names": ["Guesthouse Thar Allah (Lebanon) No. (1)"],
     "country": "Lebanon",
     "services": []
   },
   {
     "column": 502,
-    "names": ["Unified Baqee Camp – Ahsa, Qatif & Madinah"],
+    "names": ["Al-Baqi Unified Camp for Al-Ahsa, Qatif, and Medina Residents"],
     "country": "Saudi Arabia",
     "services": []
   },
   {
     "column": 503,
-    "names": ["Hasawiya Procession (Prophet's Committee)"],
+    "names": ["Mawkib Hasawiya (Prophet's Authority)"],
     "country": "Saudi Arabia",
     "services": []
   },
   {
     "column": 510,
-    "names": ["Thar Allah Rest Stop (Lebanon) #2"],
+    "names": ["Guesthouse Thar Allah (Lebanon) No. (2)"],
     "country": "Lebanon",
     "services": []
   },
   {
     "column": 539,
-    "names": ["Sons of Ali Hussainiya"],
+    "names": ["Husseiniyat Awlad Ali (AS)"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 546,
-    "names": ["Ship of Salvation Hussainiya"],
+    "names": ["Husseiniyat Safinat Al-Najat"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 547,
-    "names": ["Bahrainis' Rest Stop"],
+    "names": ["Guesthouse Bahrainis"],
     "country": "Bahrain",
     "services": []
   },
   {
     "column": 580,
-    "names": ["Khan Al-Nass Procession"],
+    "names": ["Mawkib Khan Al-Nass"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 590,
-    "names": ["Imam Hussein Grand Mosque"],
+    "names": ["Imam Hussein Mosque (AS)"],
+    "country": "Iraq",
+    "services": []
+  },
+  {
+    "column": 602,
+    "names": ["Missing Persons Center"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 619,
-    "names": ["Bint Al-Zahraa Procession Hussainiya"],
+    "names": ["Husseiniyat Mawkib Bithat Al-Zahra (AS)"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 648,
-    "names": ["Hajji Kamal Hussainiya (Lebanon)"],
+    "names": ["Husseiniyat Haji Kamal (Lebanon)"],
     "country": "Lebanon",
     "services": []
   },
   {
     "column": 650,
-    "names": ["Procession with Arabic Bakery"],
+    "names": ["Mawkib with Arabic Baker"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 660,
-    "names": ["Al-Ghadiriyah Land Rest Stop (Lebanon)"],
+    "names": ["Guesthouse Ard Al-Ghadhriya (Lebanon)"],
     "country": "Lebanon",
     "services": []
   },
   {
     "column": 673,
-    "names": ["First Checkpoint"],
+    "names": ["First Control Point"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 677,
-    "names": ["Samarra Hussainiya"],
+    "names": ["Husseiniyat People of Samarra"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 680,
-    "names": ["Fatima Al-Zahraa Hussainiya"],
+    "names": ["Husseiniyat Fatima Al-Zahra (AS)"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 689,
-    "names": ["Fatima Al-Zahraa (A.S) Hussainiya"],
+    "names": ["Husseiniyat Fatima Al-Zahra (AS)"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 700,
-    "names": ["Qateea Al-Kafein Camp (Ahsa)", "Road to Paradise Hussainiya"],
+    "names": ["Guesthouse and Mawkib Qutai Al-Kuffin for accommodation (Al-Ahsa)", "Husseiniyat Tariq Al-Jannah"],
     "country": "Saudi Arabia",
     "services": []
   },
   {
     "column": 710,
-    "names": ["Cafe for Rest (with Hookah)"],
+    "names": ["Cafe for Rest (Shisha Available)"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 741,
-    "names": ["Main Center for New Converts & International Guests (with translators)"],
+    "names": ["Main Center for Guidance of Converts and European Guests, with Translators for all languages"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 750,
-    "names": ["Zaynab Al-Hawraa Camp (Overnight)"],
+    "names": ["Zainab Al-Hawraa Camp (for accommodation)"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 787,
-    "names": ["Imam Ali Servants Procession (Lebanon)"],
+    "names": ["Mawkib Khuddam Imam Ali (Lebanon)"],
     "country": "Lebanon",
     "services": []
   },
   {
     "column": 788,
-    "names": ["Shabab Al-Taff Procession"],
+    "names": ["Mawkib Youth of Al-Tuf"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 799,
-    "names": ["Sahib Al-Zaman Procession (Lebanon)"],
+    "names": ["Mawkib Sahib Al-Zaman (Lebanon)"],
     "country": "Lebanon",
     "services": []
   },
   {
     "column": 810,
-    "names": ["Turkmen Camp Procession"],
+    "names": ["Mawkib Turkoman Camp"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 868,
-    "names": ["Zaynab's Banner Rest Stop (Safwa)"],
+    "names": ["Mawkib and Guesthouse Raya Zainab People of Safwa"],
     "country": "Saudi Arabia",
     "services": []
   },
   {
     "column": 887,
-    "names": ["Excellent Rest Camp"],
+    "names": ["Mumtaz Camp for Rest"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 891,
-    "names": ["Free Card Reader for Iranian Visitors"],
+    "names": ["Free Card Reader Without Percentage for Iranian Visitors"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 893,
-    "names": ["Pakistani Procession"],
+    "names": ["Pakistani Mawkib"],
     "country": "Pakistan",
     "services": []
   },
   {
     "column": 925,
-    "names": ["Umm Kulthum Camp (Oman)"],
+    "names": ["Mawkib Matam Umm Kulthum for accommodation (Oman)"],
     "country": "Oman",
     "services": []
   },
   {
     "column": 961,
-    "names": ["Karbala Province Checkpoint"],
+    "names": ["Control of Karbala Governorate"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 991,
-    "names": ["Fatima Bint Asad Procession (Lebanon)"],
+    "names": ["Mawkib Fatima bint Asad (Lebanon)"],
     "country": "Lebanon",
     "services": []
   },
   {
     "column": 1000,
-    "names": ["Al-Ihsan Hussainiya"],
+    "names": ["Husseiniyat Al-Ihsan"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 1001,
-    "names": ["Al-Abbas Shrine Procession"],
+    "names": ["Mawkib Al-Ataba Al-Abbasiyya"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 1010,
-    "names": ["Imam Hussein Soldiers Procession (Lebanon)"],
+    "names": ["Mawkib Jund Imam Hussein (AS) (Lebanon)"],
     "country": "Lebanon",
     "services": []
   },
   {
     "column": 1011,
-    "names": ["Reyhaneh Al-Mustafa Rest Stop (Qatif)"],
+    "names": ["Guesthouse Rayhanat Al-Mustafa (Qatif)"],
+    "country": "Saudi Arabia",
+    "services": []
+  },
+  {
+    "column": 1012,
+    "names": ["Guesthouse Rayhanat Al-Mustafa (Qatif)"],
     "country": "Saudi Arabia",
     "services": []
   },
   {
     "column": 1013,
-    "names": ["State of Kuwait Procession"],
+    "names": ["Mawkib Guesthouse State of Kuwait"],
     "country": "Kuwait",
     "services": []
   },
   {
     "column": 1045,
-    "names": ["Umm Al-Baneen Hussainiya (Lebanon)"],
+    "names": ["Husseiniyat Umm Al-Banin (Lebanon)"],
     "country": "Lebanon",
     "services": []
   },
   {
     "column": 1066,
-    "names": ["Imam Al-Hassan City for Visitors (New)"],
+    "names": ["City of Imam Al-Hasan (AS) for Visitors (New)"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 1067,
-    "names": ["Imam Al-Hassan Procession", "Al-Abbas Rest Stop"],
+    "names": ["Guesthouse and Mawkib Imam Al-Hasan Al-Mujtaba", "Mawkib Guesthouse Al-Abbas (AS)"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 1071,
-    "names": ["Rest Area with Arabic Bakery"],
+    "names": ["Rest Stop with Arabic Baker"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 1091,
-    "names": ["Al-Noor Charity Association Procession"],
+    "names": ["Mawkib Al-Noor Charity Association"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 1102,
-    "names": ["Imam Al-Abbas & Imam Hussein Rest Stops"],
+    "names": ["Guesthouse and Mawkib Imam Al-Abbas", "Guesthouse Imam Al-Hussein (AS)"],
+    "country": "Iraq",
+    "services": []
+  },
+  {
+    "column": 1103,
+    "names": ["Missing Persons Center"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 1170,
-    "names": ["Shams Al-Shumus Rest Stop (Qatif)"],
+    "names": ["Mawkib and Guesthouse Shams Al-Shomous (Qatif)"],
     "country": "Saudi Arabia",
     "services": []
   },
   {
     "column": 1184,
-    "names": ["Zubailiya Checkpoint"],
+    "names": ["Zubayliyah Control"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 1196,
-    "names": ["Khadimoun Procession (Lebanon)"],
+    "names": ["Mawkib Khadimoun (Lebanon)"],
     "country": "Lebanon",
     "services": []
   },
@@ -451,43 +481,43 @@
   },
   {
     "column": 1284,
-    "names": ["Second Checkpoint (Zubailiya)"],
+    "names": ["Second Control Point (Zubayliyah)"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 1292,
-    "names": ["Right Turn to Karbala – 5km Left"],
+    "names": ["Al-Hawali Road in Karbala goes right, 5 km to Karbala"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 1294,
-    "names": ["Straight or Right to Karbala – 5km Left"],
+    "names": ["Two directions: straight and right, 5 km to Karbala"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 1387,
-    "names": ["Ahlulbayt Procession – Medina (Right Turn)"],
+    "names": ["Mawkib and Guesthouse Ahl Al-Bayt (AS) Medina from the right side"],
     "country": "Saudi Arabia",
     "services": []
   },
   {
     "column": 1404,
-    "names": ["Free Card Reader for Iranian Visitors"],
+    "names": ["Free Card Reader Without Percentage for Iranian Visitors"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 1416,
-    "names": ["Heroine of Karbala – Haj Ali Yassin"],
+    "names": ["Mawkib Batlat Karbala – Al-Haj Ali Yassin"],
     "country": "Iraq",
     "services": []
   },
   {
     "column": 1452,
-    "names": ["End of Columns Inside Karbala"],
+    "names": ["End of Columns inside Karbala"],
     "country": "Iraq",
     "services": []
   }
