@@ -13,12 +13,14 @@
       direction: rtl;
       line-height: 1.6;
       margin: 0;
+      transition: background-color 0.3s, color 0.3s;
     }
     h1 {
       color: #800000;
       font-size: 28px;
       margin-bottom: 20px;
       text-align: center;
+      transition: color 0.3s;
     }
     #language-switcher {
       text-align: center;
@@ -34,6 +36,7 @@
       color: #800000;
       border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
     }
     input[type="text"] {
       padding: 8px;
@@ -44,6 +47,7 @@
       border: 1px solid #ccc;
       border-radius: 6px;
       box-sizing: border-box;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
     }
     #suggestions {
       max-width: 600px;
@@ -52,11 +56,13 @@
       font-size: 14px;
       color: #800000;
       font-weight: 600;
+      transition: color 0.3s;
     }
     #suggestions a {
       color: #800000;
       text-decoration: none;
       font-weight: 600;
+      transition: color 0.3s;
     }
     #countdown-container {
       max-width: 600px;
@@ -66,18 +72,21 @@
       border-radius: 8px;
       border: 1px solid #800000;
       text-align: center;
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
     }
     #countdown-title {
       font-size: 22px;
       font-weight: 700;
       margin-bottom: 10px;
       color: #800000;
+      transition: color 0.3s;
     }
     #countdown {
       font-size: 28px;
       font-weight: 700;
       color: #000;
       letter-spacing: 2px;
+      transition: color 0.3s;
     }
     #columns-container {
       max-width: 600px;
@@ -91,6 +100,7 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       scroll-margin-top: 20px;
       border-radius: 6px;
+      transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s, color 0.3s;
     }
     .column strong {
       font-size: 18px;
@@ -98,12 +108,14 @@
       display: block;
       text-align: center;
       margin-bottom: 6px;
+      transition: color 0.3s;
     }
     .column .name {
       font-size: 18px;
       color: #000000;
       text-align: center;
       margin-bottom: 10px;
+      transition: color 0.3s;
     }
     #logo-container {
       position: fixed;
@@ -123,6 +135,7 @@
       font-family: 'Cairo', sans-serif;
       font-size: 12px;
       color: #800000;
+      transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
     }
     #logo-container img {
       height: 40px;
@@ -132,6 +145,67 @@
     #logo-container span {
       color: #000;
       font-size: 10px;
+      transition: color 0.3s;
+    }
+
+    /* زر تبديل الوضع الداكن */
+    #dark-mode-toggle {
+      display: block;
+      margin: 10px auto 20px auto;
+      padding: 8px 16px;
+      font-size: 16px;
+      font-weight: bold;
+      background: #800000;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    #dark-mode-toggle:hover {
+      background: #a00000;
+    }
+
+    /* الوضع الداكن */
+    body.dark-mode {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+    body.dark-mode h1,
+    body.dark-mode #countdown-title,
+    body.dark-mode #language-switcher button,
+    body.dark-mode #suggestions,
+    body.dark-mode #suggestions a,
+    body.dark-mode .column strong,
+    body.dark-mode .column .name,
+    body.dark-mode #logo-container,
+    body.dark-mode #logo-container span {
+      color: #bb86fc;
+    }
+    body.dark-mode #language-switcher button {
+      background: #2c2c2c;
+      border-color: #bb86fc;
+      color: #bb86fc;
+    }
+    body.dark-mode input[type="text"] {
+      background: #2c2c2c;
+      border: 1px solid #bb86fc;
+      color: #e0e0e0;
+    }
+    body.dark-mode #countdown-container {
+      background: #1e1e1e;
+      border-color: #bb86fc;
+      color: #bb86fc;
+      box-shadow: 0 2px 5px rgba(187, 134, 252, 0.3);
+    }
+    body.dark-mode .column {
+      background: #1e1e1e;
+      border-color: #bb86fc;
+      box-shadow: 0 2px 5px rgba(187, 134, 252, 0.3);
+    }
+    body.dark-mode #logo-container {
+      background: rgba(40, 30, 60, 0.9);
+      box-shadow: 0 0 10px #bb86fc;
     }
   </style>
 </head>
@@ -146,6 +220,8 @@
     <button onclick="switchLanguage('en')">English</button>
     <button onclick="switchLanguage('fa')">فارسی</button>
   </div>
+
+  <button id="dark-mode-toggle">تبديل الوضع الداكن</button>
 
   <h1>🏴 دليل مشاية الأربعين 🏴</h1>
 
@@ -277,10 +353,28 @@
       renderColumns(filtered);
     });
 
+    // تحديث العد التنازلي كل ثانية
     setInterval(updateCountdown, 1000);
     updateCountdown();
     updateUIText(currentLang);
     loadData();
+
+    // الوضع الداكن - تحميل الحالة عند بداية الصفحة
+    window.addEventListener('DOMContentLoaded', () => {
+      if(localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+      }
+    });
+
+    // زر تبديل الوضع الداكن
+    document.getElementById('dark-mode-toggle').addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      if(document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('darkMode', 'enabled');
+      } else {
+        localStorage.setItem('darkMode', 'disabled');
+      }
+    });
   </script>
 </body>
 </html>
