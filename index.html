@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>دليل مشاية الأربعين</title>
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <style>
     body {
       font-family: sans-serif;
@@ -22,12 +21,24 @@
     input[type="text"] {
       padding: 8px;
       font-size: 16px;
-      margin: 0 auto 30px auto;
+      margin: 0 auto 10px auto;
       max-width: 600px;
       display: block;
       border: 1px solid #ccc;
       border-radius: 6px;
       box-sizing: border-box;
+    }
+    #suggestions {
+      max-width: 600px;
+      margin: 0 auto 30px auto;
+      text-align: center;
+      font-size: 14px;
+      color: #333;
+    }
+    #suggestions a {
+      color: #800000;
+      text-decoration: none;
+      font-weight: bold;
     }
     #columns-container {
       max-width: 600px;
@@ -84,20 +95,6 @@
       color: #000;
       font-size: 10px;
     }
-    /* رسالة الاقتراحات */
-    #suggestions {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 14px;
-      color: #555;
-    }
-    #suggestions a {
-      color: #800000;
-      text-decoration: none;
-    }
-    #suggestions a:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
@@ -112,12 +109,12 @@
 
   <input type="text" id="search" placeholder="ابحث برقم العمود، الاسم..." />
 
-  <div id="columns-container"></div>
-
   <p id="suggestions">
     للاقتراحات والتعديلات تواصل عبر الإيميل: 
     <a href="mailto:khademcrs@gmail.com">khademcrs@gmail.com</a>
   </p>
+
+  <div id="columns-container"></div>
 
   <script>
     let columnsData = [];
@@ -127,7 +124,6 @@
         const res = await fetch('data.json');
         if (!res.ok) throw new Error('فشل تحميل البيانات');
         columnsData = await res.json();
-        columnsData.sort((a, b) => a.column - b.column); // فرز تلقائي حسب رقم العمود
         renderColumns(columnsData);
       } catch(e) {
         document.getElementById('columns-container').innerHTML = '<p style="text-align:center;color:red;">' + e.message + '</p>';
@@ -143,12 +139,16 @@
         return;
       }
 
+      // فرز البيانات حسب رقم العمود تلقائياً
+      data.sort((a, b) => a.column - b.column);
+
       data.forEach(col => {
         const colDiv = document.createElement('div');
         colDiv.className = 'column';
         colDiv.id = 'column-' + col.column;
 
-        let namesHtml = col.names.map(name => `<div class="name">${name}</div>`).join('');
+        // دمج جميع الأسماء في أسطر منفصلة
+        const namesHtml = col.names.map(name => `<div class="name">${name}</div>`).join('');
 
         colDiv.innerHTML = `
           <strong>العمود ${col.column}</strong>
