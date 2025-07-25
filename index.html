@@ -4,18 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>دليل مشاية الأربعين</title>
-
-  <!-- خط Cairo -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet" />
-
   <style>
     body {
       font-family: 'Cairo', sans-serif;
       background: #f9f9f9;
       padding: 20px;
+      direction: rtl;
       line-height: 1.6;
       margin: 0;
-      direction: rtl;
     }
     h1 {
       color: #800000;
@@ -23,28 +20,20 @@
       margin-bottom: 20px;
       text-align: center;
     }
-    /* أزرار التبديل */
-    #lang-switcher {
-      max-width: 600px;
-      margin: 0 auto 20px auto;
+    #language-switcher {
       text-align: center;
-      direction: ltr; /* تخلي الأزرار من اليسار لليمين */
+      margin-bottom: 10px;
     }
-    #lang-switcher button {
-      margin: 0 8px;
-      padding: 6px 14px;
-      font-weight: 700;
+    #language-switcher button {
+      margin: 0 5px;
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: bold;
+      background: #fff;
       border: 1px solid #800000;
-      border-radius: 5px;
-      background: white;
       color: #800000;
+      border-radius: 5px;
       cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-    #lang-switcher button.active,
-    #lang-switcher button:hover {
-      background: #800000;
-      color: white;
     }
     input[type="text"] {
       padding: 8px;
@@ -55,7 +44,6 @@
       border: 1px solid #ccc;
       border-radius: 6px;
       box-sizing: border-box;
-      direction: rtl;
     }
     #suggestions {
       max-width: 600px;
@@ -148,21 +136,18 @@
   </style>
 </head>
 <body>
-
-  <!-- أزرار تبديل اللغة -->
-  <div id="lang-switcher">
-    <button data-lang="ar" class="active">العربية</button>
-    <button data-lang="en">English</button>
-    <button data-lang="fa">فارسی</button>
-  </div>
-
-  <!-- شعار @khademcrs أسفل الصفحة -->
   <div id="logo-container">
     <img src="logo.png" alt="شعار Khadem" />
     <span>@khademcrs</span>
   </div>
 
-  <h1 id="page-title">🏴 دليل مشاية الأربعين 🏴</h1>
+  <div id="language-switcher">
+    <button onclick="switchLanguage('ar')">العربية</button>
+    <button onclick="switchLanguage('en')">English</button>
+    <button onclick="switchLanguage('fa')">فارسی</button>
+  </div>
+
+  <h1>🏴 دليل مشاية الأربعين 🏴</h1>
 
   <input type="text" id="search" placeholder="ابحث برقم العمود، الاسم..." />
 
@@ -179,54 +164,64 @@
   <div id="columns-container"></div>
 
   <script>
-    // تحويل أرقام إنجليزية لأرقام عربية-هندية
-    function toArabicNumbers(str) {
-      const arabicNums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
-      return str.replace(/\d/g, d => arabicNums[d]);
-    }
-
-    // تحويل أرقام إنجليزية لأرقام فارسية
-    function toPersianNumbers(str) {
-      const persianNums = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
-      return str.replace(/\d/g, d => persianNums[d]);
-    }
-
-    // تحميل بيانات الترجمة لكل لغة (يمكن تعديل لتكون من ملفات خارجية أو من هنا مباشرة)
-    const translations = {
-      ar: {
-        pageTitle: "🏴 دليل مشاية الأربعين 🏴",
-        searchPlaceholder: "ابحث برقم العمود، الاسم...",
-        suggestionsText: 'للاقتراحات والتعديلات تواصل عبر الإيميل: <a href="mailto:khademcrs@gmail.com">khademcrs@gmail.com</a>',
-        countdownTitle: "العد التنازلي ليوم الأربعين",
-        countdownDaysText: "يوم",
-        columnText: "العمود"
-      },
-      en: {
-        pageTitle: "🏴 Arbaeen Walk Guide 🏴",
-        searchPlaceholder: "Search by column number, name...",
-        suggestionsText: 'For suggestions and edits contact: <a href="mailto:khademcrs@gmail.com">khademcrs@gmail.com</a>',
-        countdownTitle: "Countdown to Arbaeen Day",
-        countdownDaysText: "days",
-        columnText: "Column"
-      },
-      fa: {
-        pageTitle: "🏴 راهنمای پیاده‌روی اربعین 🏴",
-        searchPlaceholder: "جستجو بر اساس شماره ستون، نام...",
-        suggestionsText: 'برای پیشنهادات و اصلاحات تماس بگیرید: <a href="mailto:khademcrs@gmail.com">khademcrs@gmail.com</a>',
-        countdownTitle: "شمارش معکوس تا اربعین",
-        countdownDaysText: "روز",
-        columnText: "ستون"
-      }
-    };
-
-    // اللغة الحالية
+    const countdownDate = new Date('2025-08-15T00:00:00+03:00').getTime();
     let currentLang = 'ar';
     let columnsData = [];
 
-    // تحميل بيانات الأعمدة حسب اللغة
-    async function loadData(lang) {
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = countdownDate - now;
+      if(diff <= 0) {
+        document.getElementById('countdown-container').style.display = 'none';
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      document.getElementById('countdown').textContent = 
+        days + ' يوم ' + hours.toString().padStart(2, '0') + ':' + 
+        minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
+    }
+
+    function updateUIText(lang) {
+      const title = document.getElementById('countdown-title');
+      const heading = document.querySelector('h1');
+      const input = document.getElementById('search');
+      const suggestions = document.getElementById('suggestions');
+
+      if (lang === 'en') {
+        heading.textContent = '🏴 Arbaeen Processions Guide 🏴';
+        title.textContent = 'Countdown to Arbaeen Day';
+        input.placeholder = 'Search by column number, name...';
+        suggestions.innerHTML = `For suggestions or edits, email us at 
+          <a href="mailto:khademcrs@gmail.com">khademcrs@gmail.com</a>`;
+      } else if (lang === 'fa') {
+        heading.textContent = '🏴 راهنمای موکب‌های اربعین 🏴';
+        title.textContent = 'شمارش معکوس تا روز اربعین';
+        input.placeholder = 'جستجو بر اساس شماره ستون، نام...';
+        suggestions.innerHTML = `برای پیشنهادات و ویرایش‌ها با ایمیل تماس بگیرید: 
+          <a href="mailto:khademcrs@gmail.com">khademcrs@gmail.com</a>`;
+      } else {
+        heading.textContent = '🏴 دليل مشاية الأربعين 🏴';
+        title.textContent = 'العد التنازلي ليوم الأربعين';
+        input.placeholder = 'ابحث برقم العمود، الاسم...';
+        suggestions.innerHTML = `للاقتراحات والتعديلات تواصل عبر الإيميل: 
+          <a href="mailto:khademcrs@gmail.com">khademcrs@gmail.com</a>`;
+      }
+    }
+
+    function switchLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = (lang === 'en') ? 'ltr' : 'rtl';
+      updateUIText(lang);
+      loadData();
+    }
+
+    async function loadData() {
       try {
-        const res = await fetch(`data-${lang}.json`);
+        const res = await fetch(`data-${currentLang}.json`);
         if (!res.ok) throw new Error('فشل تحميل البيانات');
         columnsData = await res.json();
         renderColumns(columnsData);
@@ -235,155 +230,57 @@
       }
     }
 
-    // تحديث الواجهة النصية حسب اللغة
-    function updateTexts() {
-      const t = translations[currentLang];
-
-      document.getElementById('page-title').textContent = t.pageTitle;
-      document.getElementById('search').placeholder = t.searchPlaceholder;
-      document.getElementById('suggestions').innerHTML = t.suggestionsText;
-      document.getElementById('countdown-title').textContent = t.countdownTitle;
-    }
-
-    // تحديث النصوص داخل الأعمدة (كلمة "العمود" مع الرقم)
     function renderColumns(data) {
       const container = document.getElementById('columns-container');
       container.innerHTML = '';
-
       if(data.length === 0) {
         container.innerHTML = '<p style="text-align:center;">لا توجد نتائج.</p>';
         return;
       }
-
-      // ترتيب حسب الرقم (column)
-      data.sort((a,b) => a.column - b.column);
-
-      data.forEach(item => {
-        let colNum = item.column.toString();
-
-        // عدل شكل الرقم حسب اللغة
-        if(currentLang === 'ar') colNum = toArabicNumbers(colNum);
-        else if(currentLang === 'fa') colNum = toPersianNumbers(colNum);
-
-        // الاسماء (قد يكون أكثر من اسم)
-        const names = item.names.join(", ");
-
-        // بناء عنصر العمود
-        const div = document.createElement('div');
-        div.classList.add('column');
-
-        // العنوان مع "العمود"
-        const strong = document.createElement('strong');
-        strong.textContent = `${translations[currentLang].columnText} ${colNum}`;
-
-        // الأسماء
-        const p = document.createElement('p');
-        p.classList.add('name');
-        p.textContent = names;
-
-        div.appendChild(strong);
-        div.appendChild(p);
-        container.appendChild(div);
+      data.sort((a, b) => a.column - b.column);
+      data.forEach(col => {
+        const colDiv = document.createElement('div');
+        colDiv.className = 'column';
+        colDiv.id = 'column-' + col.column;
+        const namesHtml = col.names.map(name => `<div class="name">${name}</div>`).join('');
+        colDiv.innerHTML = `<strong>العمود ${col.column}</strong>${namesHtml}`;
+        container.appendChild(colDiv);
       });
     }
 
-    // تحديث العد التنازلي ليوم الأربعين
-    function updateCountdown() {
-      const targetDate = new Date("2025-10-05T00:00:00+03:00"); // تاريخ يوم الأربعين (غيرله حسب المناسب)
-      const now = new Date();
-      let diff = targetDate - now;
-
-      if(diff <= 0) {
-        document.getElementById('countdown').textContent = currentLang === 'ar' ? 'اليوم هو يوم الأربعين' : currentLang === 'en' ? 'Today is Arbaeen Day' : 'امروز اربعین است';
-        return;
-      }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      diff -= days * (1000 * 60 * 60 * 24);
-      const hours = Math.floor(diff / (1000 * 60 * 60));
-      diff -= hours * (1000 * 60 * 60);
-      const minutes = Math.floor(diff / (1000 * 60));
-      diff -= minutes * (1000 * 60);
-      const seconds = Math.floor(diff / 1000);
-
-      // تنسيق الوقت
-      const pad = n => n.toString().padStart(2, '0');
-      let timeStr = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
-
-      // تحويل الأرقام حسب اللغة (في العربي والفارسي)
-      let daysStr = days.toString();
-      if(currentLang === 'ar') daysStr = toArabicNumbers(daysStr);
-      else if(currentLang === 'fa') daysStr = toPersianNumbers(daysStr);
-
-      document.getElementById('countdown').textContent = `${daysStr} ${translations[currentLang].countdownDaysText} ${timeStr}`;
-    }
-
-    // تبديل اللغة
-    function switchLanguage(lang) {
-      if(lang === currentLang) return;
-
-      currentLang = lang;
-
-      // اتجاه الصفحة وخصائص الخطوط
-      if(lang === 'ar') {
-        document.documentElement.lang = 'ar';
-        document.documentElement.dir = 'rtl';
-        document.body.style.fontFamily = "'Cairo', sans-serif";
-      }
-      else if(lang === 'en') {
-        document.documentElement.lang = 'en';
-        document.documentElement.dir = 'ltr';
-        document.body.style.fontFamily = "'Arial', sans-serif";
-      }
-      else if(lang === 'fa') {
-        document.documentElement.lang = 'fa';
-        document.documentElement.dir = 'rtl';
-        document.body.style.fontFamily = "'Cairo', sans-serif";
-      }
-
-      // تحديث النصوص
-      updateTexts();
-
-      // تحميل البيانات
-      loadData(lang);
-
-      // تحديث العد التنازلي فوراً
-      updateCountdown();
-
-      // تفعيل زر اللغة المختار
-      document.querySelectorAll('#lang-switcher button').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === lang);
-      });
-    }
-
-    // البحث داخل الأعمدة
     document.getElementById('search').addEventListener('input', e => {
-      const val = e.target.value.trim().toLowerCase();
-      if(val === '') {
+      const q = e.target.value.trim().toLowerCase();
+      if(q === '') {
+        document.getElementById('countdown-container').style.display = 'block';
+        document.getElementById('suggestions').style.display = 'block';
         renderColumns(columnsData);
         return;
       }
-
-      // فلترة البيانات
-      const filtered = columnsData.filter(item => {
-        // بحث برقم العمود
-        if(item.column.toString().includes(val)) return true;
-
-        // بحث بالاسماء (عربي، إنجليزي، فارسي - حسب ما في الاسم)
-        return item.names.some(name => name.toLowerCase().includes(val));
-      });
-
+      document.getElementById('countdown-container').style.display = 'none';
+      document.getElementById('suggestions').style.display = 'none';
+      const isNumber = !isNaN(q) && q !== '';
+      let filtered = [];
+      if(isNumber) {
+        filtered = columnsData.filter(c => c.column.toString() === q);
+        if(filtered.length === 1) {
+          renderColumns(filtered);
+          setTimeout(() => {
+            document.getElementById('column-' + q)?.scrollIntoView({behavior: 'smooth', block: 'start'});
+          }, 100);
+          return;
+        }
+      }
+      filtered = columnsData.filter(c => 
+        c.names.some(name => name.toLowerCase().includes(q)) || 
+        c.column.toString().includes(q)
+      );
       renderColumns(filtered);
     });
 
-    // تحميل بيانات البداية والاعدادات
-    window.onload = () => {
-      switchLanguage('ar'); // اللغة الافتراضية عربية
-
-      // تحديث العد التنازلي كل ثانية
-      setInterval(updateCountdown, 1000);
-    };
-
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+    updateUIText(currentLang);
+    loadData();
   </script>
 </body>
 </html>
