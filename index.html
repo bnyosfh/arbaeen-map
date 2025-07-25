@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>دليل مشاية الأربعين</title>
-
-  <!-- إضافة خط Cairo -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet" />
-
   <style>
     body {
       font-family: 'Cairo', sans-serif;
@@ -23,25 +20,20 @@
       margin-bottom: 20px;
       text-align: center;
     }
-    #lang-switcher {
+    #language-switcher {
       text-align: center;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
-    #lang-switcher button {
-      padding: 6px 12px;
+    #language-switcher button {
       margin: 0 5px;
-      font-weight: normal;
-      cursor: pointer;
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: bold;
+      background: #fff;
       border: 1px solid #800000;
-      background: white;
       color: #800000;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
-    }
-    #lang-switcher button.active,
-    #lang-switcher button:hover {
-      background-color: #800000;
-      color: white;
+      border-radius: 5px;
+      cursor: pointer;
     }
     input[type="text"] {
       padding: 8px;
@@ -113,7 +105,6 @@
       text-align: center;
       margin-bottom: 10px;
     }
-    /* شعار أسفل الصفحة */
     #logo-container {
       position: fixed;
       bottom: 10px;
@@ -145,18 +136,15 @@
   </style>
 </head>
 <body>
-
-  <!-- أزرار تبديل اللغة -->
-  <div id="lang-switcher">
-    <button data-lang="ar" class="active">العربية</button>
-    <button data-lang="en">English</button>
-    <button data-lang="fa">فارسی</button>
-  </div>
-
-  <!-- شعار @khademcrs أسفل الصفحة -->
   <div id="logo-container">
     <img src="logo.png" alt="شعار Khadem" />
     <span>@khademcrs</span>
+  </div>
+
+  <div id="language-switcher">
+    <button onclick="switchLanguage('ar')">العربية</button>
+    <button onclick="switchLanguage('en')">English</button>
+    <button onclick="switchLanguage('fa')">فارسی</button>
   </div>
 
   <h1>🏴 دليل مشاية الأربعين 🏴</h1>
@@ -176,70 +164,64 @@
   <div id="columns-container"></div>
 
   <script>
-    // بيانات الترجمة للنصوص
-    const translations = {
-      ar: {
-        dir: 'rtl',
-        title: '🏴 دليل مشاية الأربعين 🏴',
-        placeholder: 'ابحث برقم العمود، الاسم...',
-        countdownTitle: 'العد التنازلي ليوم الأربعين',
-        suggestions: 'للاقتراحات والتعديلات تواصل عبر الإيميل: <a href="mailto:khademcrs@gmail.com">khademcrs@gmail.com</a>'
-      },
-      en: {
-        dir: 'ltr',
-        title: '🏴 Arbaeen Walk Guide 🏴',
-        placeholder: 'Search by column number, name...',
-        countdownTitle: 'Countdown to Arbaeen Day',
-        suggestions: 'For suggestions and edits contact via email: <a href="mailto:khademcrs@gmail.com">khademcrs@gmail.com</a>'
-      },
-      fa: {
-        dir: 'rtl',
-        title: '🏴 راهنمای پیاده‌روی اربعین 🏴',
-        placeholder: 'جستجو بر اساس شماره ستون، نام...',
-        countdownTitle: 'شمارش معکوس تا روز اربعین',
-        suggestions: 'برای پیشنهادات و اصلاحات از طریق ایمیل تماس بگیرید: <a href="mailto:khademcrs@gmail.com">khademcrs@gmail.com</a>'
-      }
-    };
-
-    // تفعيل زر اللغة النشط بصرياً
-    function setActiveButton(lang) {
-      document.querySelectorAll('#lang-switcher button').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
-      });
-    }
-
-    // عداد تنازلي ليوم الجمعة 15 أغسطس 2025
     const countdownDate = new Date('2025-08-15T00:00:00+03:00').getTime();
+    let currentLang = 'ar';
+    let columnsData = [];
 
     function updateCountdown() {
       const now = new Date().getTime();
       const diff = countdownDate - now;
-
       if(diff <= 0) {
         document.getElementById('countdown-container').style.display = 'none';
         return;
       }
-
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
       document.getElementById('countdown').textContent = 
-        days + ' يوم ' + 
-        hours.toString().padStart(2, '0') + ':' + 
-        minutes.toString().padStart(2, '0') + ':' + 
-        seconds.toString().padStart(2, '0');
+        days + ' يوم ' + hours.toString().padStart(2, '0') + ':' + 
+        minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
     }
 
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
+    function updateUIText(lang) {
+      const title = document.getElementById('countdown-title');
+      const heading = document.querySelector('h1');
+      const input = document.getElementById('search');
+      const suggestions = document.getElementById('suggestions');
 
-    let columnsData = [];
+      if (lang === 'en') {
+        heading.textContent = '🏴 Arbaeen Processions Guide 🏴';
+        title.textContent = 'Countdown to Arbaeen Day';
+        input.placeholder = 'Search by column number, name...';
+        suggestions.innerHTML = `For suggestions or edits, email us at 
+          <a href="mailto:khademcrs@gmail.com">khademcrs@gmail.com</a>`;
+      } else if (lang === 'fa') {
+        heading.textContent = '🏴 راهنمای موکب‌های اربعین 🏴';
+        title.textContent = 'شمارش معکوس تا روز اربعین';
+        input.placeholder = 'جستجو بر اساس شماره ستون، نام...';
+        suggestions.innerHTML = `برای پیشنهادات و ویرایش‌ها با ایمیل تماس بگیرید: 
+          <a href="mailto:khademcrs@gmail.com">khademcrs@gmail.com</a>`;
+      } else {
+        heading.textContent = '🏴 دليل مشاية الأربعين 🏴';
+        title.textContent = 'العد التنازلي ليوم الأربعين';
+        input.placeholder = 'ابحث برقم العمود، الاسم...';
+        suggestions.innerHTML = `للاقتراحات والتعديلات تواصل عبر الإيميل: 
+          <a href="mailto:khademcrs@gmail.com">khademcrs@gmail.com</a>`;
+      }
+    }
+
+    function switchLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = (lang === 'en') ? 'ltr' : 'rtl';
+      updateUIText(lang);
+      loadData();
+    }
 
     async function loadData() {
       try {
-        const res = await fetch('data.json');
+        const res = await fetch(`data-${currentLang}.json`);
         if (!res.ok) throw new Error('فشل تحميل البيانات');
         columnsData = await res.json();
         renderColumns(columnsData);
@@ -251,47 +233,33 @@
     function renderColumns(data) {
       const container = document.getElementById('columns-container');
       container.innerHTML = '';
-
       if(data.length === 0) {
         container.innerHTML = '<p style="text-align:center;">لا توجد نتائج.</p>';
         return;
       }
-
       data.sort((a, b) => a.column - b.column);
-
       data.forEach(col => {
         const colDiv = document.createElement('div');
         colDiv.className = 'column';
         colDiv.id = 'column-' + col.column;
-
         const namesHtml = col.names.map(name => `<div class="name">${name}</div>`).join('');
-
-        colDiv.innerHTML = `
-          <strong>العمود ${col.column}</strong>
-          ${namesHtml}
-        `;
-
+        colDiv.innerHTML = `<strong>العمود ${col.column}</strong>${namesHtml}`;
         container.appendChild(colDiv);
       });
     }
 
     document.getElementById('search').addEventListener('input', e => {
       const q = e.target.value.trim().toLowerCase();
-
       if(q === '') {
         document.getElementById('countdown-container').style.display = 'block';
         document.getElementById('suggestions').style.display = 'block';
         renderColumns(columnsData);
         return;
       }
-
       document.getElementById('countdown-container').style.display = 'none';
       document.getElementById('suggestions').style.display = 'none';
-
       const isNumber = !isNaN(q) && q !== '';
-
       let filtered = [];
-
       if(isNumber) {
         filtered = columnsData.filter(c => c.column.toString() === q);
         if(filtered.length === 1) {
@@ -302,40 +270,17 @@
           return;
         }
       }
-
       filtered = columnsData.filter(c => 
         c.names.some(name => name.toLowerCase().includes(q)) || 
         c.column.toString().includes(q)
       );
-
       renderColumns(filtered);
     });
 
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+    updateUIText(currentLang);
     loadData();
-
-    // معالجة تبديل اللغة
-    const langSwitcher = document.getElementById('lang-switcher');
-    const body = document.body;
-
-    langSwitcher.addEventListener('click', e => {
-      if(e.target.tagName === 'BUTTON') {
-        const selectedLang = e.target.getAttribute('data-lang');
-        const t = translations[selectedLang];
-
-        body.dir = t.dir;
-        document.documentElement.lang = selectedLang;
-        document.title = t.title;
-        document.querySelector('h1').textContent = t.title;
-        document.getElementById('search').placeholder = t.placeholder;
-        document.getElementById('countdown-title').textContent = t.countdownTitle;
-        document.getElementById('suggestions').innerHTML = t.suggestions;
-
-        setActiveButton(selectedLang);
-
-        // لو عندك ملفات بيانات مختلفة لكل لغة، هنا تحملها:
-        // loadDataForLang(selectedLang);
-      }
-    });
   </script>
 </body>
 </html>
