@@ -2,195 +2,154 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>دليل مشاية الأربعين</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>دليل العواميد على طريق يا حسين</title>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <style>
     body {
-      font-family: sans-serif;
-      background: #f9f9f9;
+      font-family: Arial, sans-serif;
       padding: 20px;
-      direction: rtl;
-      line-height: 1.6;
-    }
-    h1 {
-      color: #800000;
-      font-size: 28px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    input[type="text"] {
-      padding: 8px;
-      font-size: 16px;
-      margin: 0 auto 10px auto;
-      max-width: 600px;
-      display: block;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      box-sizing: border-box;
-    }
-    #suggestions {
-      max-width: 600px;
-      margin: 0 auto 30px auto;
-      text-align: center;
-      font-size: 14px;
+      background: #f9f9f9;
       color: #333;
     }
-    #suggestions a {
-      color: #800000;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    #columns-container {
-      max-width: 600px;
-      margin: 0 auto 40px auto;
-    }
-    .column {
-      background: #fff;
-      padding: 15px 20px;
-      margin-bottom: 12px;
-      border-right: 5px solid #800000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      scroll-margin-top: 20px;
-      border-radius: 6px;
-    }
-    .column strong {
-      font-size: 18px;
-      color: #550000;
-      display: block;
-      text-align: center;
-      margin-bottom: 6px;
-    }
-    .column .name {
-      font-size: 18px;
-      color: #000000;
+    h1 {
       text-align: center;
       margin-bottom: 10px;
     }
-    /* شعار أسفل الصفحة */
-    #logo-container {
-      position: fixed;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255, 255, 255, 0.9);
-      padding: 5px 12px;
-      border-radius: 6px;
-      box-shadow: 0 0 6px rgba(0,0,0,0.2);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      z-index: 9999;
+    #countdown-container {
+      text-align: center;
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    #search {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+    .column-box {
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .column-number {
       font-weight: bold;
-      font-family: sans-serif;
-      font-size: 12px;
-      color: #800000;
+      color: #444;
+      margin-bottom: 5px;
     }
-    #logo-container img {
-      height: 40px;
-      width: auto;
-      display: block;
+    .names, .services {
+      margin: 5px 0;
     }
-    #logo-container span {
-      color: #000;
-      font-size: 10px;
+    .suggest {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 14px;
+      color: #666;
     }
   </style>
 </head>
 <body>
 
-  <!-- شعار @khademcrs أسفل الصفحة -->
-  <div id="logo-container">
-    <img src="logo.png" alt="شعار Khadem" />
-    <span>@khademcrs</span>
+  <h1>📍 دليل العواميد على طريق يا حسين (نجف - كربلاء)</h1>
+
+  <div id="countdown-container">
+    <div id="countdown-title">⏳ العد التنازلي ليوم الأربعين</div>
+    <div id="countdown"></div>
   </div>
 
-  <h1>🏴 دليل مشاية الأربعين 🏴</h1>
+  <input type="text" id="search" placeholder="ابحث باسم الموكب أو رقم العمود...">
 
-  <input type="text" id="search" placeholder="ابحث برقم العمود، الاسم..." />
+  <div id="results"></div>
 
-  <p id="suggestions">
-    للاقتراحات والتعديلات تواصل عبر الإيميل: 
+  <div class="suggest">
+    للاقتراحات أو التعديلات والإضافات تواصل عبر الإيميل:  
     <a href="mailto:khademcrs@gmail.com">khademcrs@gmail.com</a>
-  </p>
-
-  <div id="columns-container"></div>
+  </div>
 
   <script>
-    let columnsData = [];
+    let data = [];
 
-    async function loadData() {
-      try {
-        const res = await fetch('data.json');
-        if (!res.ok) throw new Error('فشل تحميل البيانات');
-        columnsData = await res.json();
-        renderColumns(columnsData);
-      } catch(e) {
-        document.getElementById('columns-container').innerHTML = '<p style="text-align:center;color:red;">' + e.message + '</p>';
-      }
-    }
+    fetch('data.json')
+      .then(response => response.json())
+      .then(json => {
+        data = json.sort((a, b) => a.column - b.column);
+        displayData(data);
+      });
 
-    function renderColumns(data) {
-      const container = document.getElementById('columns-container');
-      container.innerHTML = '';
+    function displayData(items) {
+      const results = document.getElementById('results');
+      results.innerHTML = '';
 
-      if(data.length === 0) {
-        container.innerHTML = '<p style="text-align:center;">لا توجد نتائج.</p>';
-        return;
-      }
+      items.forEach(item => {
+        const box = document.createElement('div');
+        box.className = 'column-box';
 
-      // فرز البيانات حسب رقم العمود تلقائياً
-      data.sort((a, b) => a.column - b.column);
+        const number = document.createElement('div');
+        number.className = 'column-number';
+        number.textContent = `📍 عمود رقم ${item.column}`;
+        box.appendChild(number);
 
-      data.forEach(col => {
-        const colDiv = document.createElement('div');
-        colDiv.className = 'column';
-        colDiv.id = 'column-' + col.column;
+        if (item.names && item.names.length > 0) {
+          const names = document.createElement('div');
+          names.className = 'names';
+          names.innerHTML = item.names.map(name => `🔹 ${name}`).join('<br>');
+          box.appendChild(names);
+        }
 
-        // دمج جميع الأسماء في أسطر منفصلة
-        const namesHtml = col.names.map(name => `<div class="name">${name}</div>`).join('');
+        if (item.services && item.services.length > 0) {
+          const services = document.createElement('div');
+          services.className = 'services';
+          services.innerHTML = `<strong>الخدمات:</strong><br>` + item.services.join('<br>');
+          box.appendChild(services);
+        }
 
-        colDiv.innerHTML = `
-          <strong>العمود ${col.column}</strong>
-          ${namesHtml}
-        `;
-
-        container.appendChild(colDiv);
+        results.appendChild(box);
       });
     }
 
-    document.getElementById('search').addEventListener('input', e => {
-      const q = e.target.value.trim().toLowerCase();
-
-      if(q === '') {
-        renderColumns(columnsData);
-        return;
-      }
-
-      const isNumber = !isNaN(q) && q !== '';
-
-      let filtered = [];
-
-      if(isNumber) {
-        filtered = columnsData.filter(c => c.column.toString() === q);
-        if(filtered.length === 1) {
-          renderColumns(filtered);
-          setTimeout(() => {
-            document.getElementById('column-' + q)?.scrollIntoView({behavior: 'smooth', block: 'start'});
-          }, 100);
-          return;
-        }
-      }
-
-      filtered = columnsData.filter(c => 
-        c.names.some(name => name.toLowerCase().includes(q)) || 
-        c.column.toString().includes(q)
-      );
-
-      renderColumns(filtered);
+    document.getElementById('search').addEventListener('input', function() {
+      const value = this.value.trim();
+      const filtered = data.filter(item => {
+        return item.column.toString().includes(value) ||
+               (item.names && item.names.some(name => name.includes(value))) ||
+               (item.services && item.services.some(service => service.includes(value)));
+      });
+      displayData(filtered);
     });
 
-    loadData();
+    function startCountdown() {
+      const container = document.getElementById("countdown-container");
+      const countdownEl = document.getElementById("countdown");
+      const titleEl = document.getElementById("countdown-title");
+
+      const arbaeenDate = new Date("2025-08-15T00:00:00");
+
+      function updateCountdown() {
+        const now = new Date();
+        const diff = arbaeenDate - now;
+
+        if (diff <= 0) {
+          container.style.display = "none";
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        countdownEl.textContent = `تبقّى ${days} يوم ${hours} ساعة ${minutes} دقيقة ${seconds} ثانية`;
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    }
+
+    startCountdown();
   </script>
+
 </body>
 </html>
