@@ -22,12 +22,16 @@
       text-align: center;
       transition: color 0.3s;
     }
+
     #language-switcher {
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
       margin-bottom: 10px;
     }
     #language-switcher button {
-      margin: 0 5px;
+      margin: 0;
       padding: 6px 12px;
       font-size: 14px;
       font-weight: bold;
@@ -38,16 +42,23 @@
       cursor: pointer;
       transition: background-color 0.3s, color 0.3s, border-color 0.3s;
     }
-    input[type="text"] {
-      padding: 8px;
-      font-size: 16px;
-      margin: 0 auto 10px auto;
-      max-width: 600px;
-      display: block;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      box-sizing: border-box;
+    #dark-mode-toggle {
+      font-size: 18px;
+      padding: 4px 8px;
+      background: #fff;
+      border: 1px solid #800000;
+      border-radius: 5px;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
       transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+      margin-left: 10px;
+    }
+    #dark-mode-toggle:hover {
+      background-color: #f0e5e5;
     }
     #suggestions {
       max-width: 600px;
@@ -148,24 +159,6 @@
       transition: color 0.3s;
     }
 
-    /* زر تبديل الوضع الداكن */
-    #dark-mode-toggle {
-      display: block;
-      margin: 10px auto 20px auto;
-      padding: 8px 16px;
-      font-size: 16px;
-      font-weight: bold;
-      background: #800000;
-      border: none;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    #dark-mode-toggle:hover {
-      background: #a00000;
-    }
-
     /* الوضع الداكن */
     body.dark-mode {
       background-color: #121212;
@@ -183,6 +176,11 @@
       color: #bb86fc;
     }
     body.dark-mode #language-switcher button {
+      background: #2c2c2c;
+      border-color: #bb86fc;
+      color: #bb86fc;
+    }
+    body.dark-mode #dark-mode-toggle {
       background: #2c2c2c;
       border-color: #bb86fc;
       color: #bb86fc;
@@ -219,9 +217,8 @@
     <button onclick="switchLanguage('ar')">العربية</button>
     <button onclick="switchLanguage('en')">English</button>
     <button onclick="switchLanguage('fa')">فارسی</button>
+    <button id="dark-mode-toggle" title="تبديل الوضع الداكن" aria-label="تبديل الوضع الداكن">🌗</button>
   </div>
-
-  <button id="dark-mode-toggle">تبديل الوضع الداكن</button>
 
   <h1>🏴 دليل مشاية الأربعين 🏴</h1>
 
@@ -353,21 +350,17 @@
       renderColumns(filtered);
     });
 
-    // تحديث العد التنازلي كل ثانية
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-    updateUIText(currentLang);
-    loadData();
+    // الوضع الداكن
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
 
-    // الوضع الداكن - تحميل الحالة عند بداية الصفحة
+    // تحميل الحالة عند بداية الصفحة
     window.addEventListener('DOMContentLoaded', () => {
       if(localStorage.getItem('darkMode') === 'enabled') {
         document.body.classList.add('dark-mode');
       }
     });
 
-    // زر تبديل الوضع الداكن
-    document.getElementById('dark-mode-toggle').addEventListener('click', () => {
+    darkModeToggle.addEventListener('click', () => {
       document.body.classList.toggle('dark-mode');
       if(document.body.classList.contains('dark-mode')) {
         localStorage.setItem('darkMode', 'enabled');
@@ -375,6 +368,11 @@
         localStorage.setItem('darkMode', 'disabled');
       }
     });
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+    updateUIText(currentLang);
+    loadData();
   </script>
 </body>
 </html>
