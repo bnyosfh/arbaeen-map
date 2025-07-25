@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>دليل مشاية الأربعين</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: 'Cairo', sans-serif;
@@ -14,84 +14,132 @@
       line-height: 1.6;
       margin: 0;
       transition: background 0.3s, color 0.3s;
+      color: #333; /* Default text color */
     }
     body.dark-mode {
-      background: #121212;
+      background: #1a1a1a; /* Darker background */
       color: #e0e0e0;
     }
     h1 {
       color: #800000;
-      font-size: 28px;
-      margin-bottom: 20px;
+      font-size: 32px; /* Slightly larger */
+      margin-bottom: 25px;
       text-align: center;
+      font-weight: 700;
     }
     #language-switcher {
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
     #language-switcher button, #dark-mode-toggle {
-      margin: 0 5px;
-      padding: 6px 12px;
-      font-size: 14px;
+      margin: 0 8px; /* More spacing */
+      padding: 8px 16px; /* Larger buttons */
+      font-size: 15px;
       font-weight: bold;
       background: #fff;
       border: 1px solid #800000;
       color: #800000;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
+      transition: background 0.3s, color 0.3s, border-color 0.3s, transform 0.1s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Soft shadow */
     }
+    #language-switcher button:hover, #dark-mode-toggle:hover {
+        background: #800000;
+        color: #fff;
+        transform: translateY(-1px);
+    }
+    body.dark-mode #language-switcher button, body.dark-mode #dark-mode-toggle {
+        background: #333;
+        border-color: #bb4444;
+        color: #ff8888;
+    }
+    body.dark-mode #language-switcher button:hover, body.dark-mode #dark-mode-toggle:hover {
+        background: #bb4444;
+        color: #fff;
+    }
+
     input[type="text"] {
-      padding: 12px;
+      padding: 14px; /* Larger padding */
       font-size: 18px;
-      font-weight: bold;
-      margin: 0 auto 10px auto;
+      font-weight: 600;
+      margin: 0 auto 15px auto; /* More margin */
       width: 90vw;
       max-width: 900px;
       display: block;
       border: 2px solid #800000;
-      border-radius: 8px;
+      border-radius: 10px; /* More rounded */
       box-sizing: border-box;
       background-color: #fff;
       color: #000;
-      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Stronger shadow */
+    }
+    input[type="text"]:focus {
+        outline: none;
+        border-color: #b30000; /* Darker red on focus */
+        box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.2); /* Focus ring */
     }
     body.dark-mode input[type="text"] {
-      background-color: #222;
+      background-color: #2a2a2a; /* Darker input background */
       color: #eee;
-      border-color: #bb4444;
+      border-color: #ff6666;
+      box-shadow: 0 2px 8px rgba(255, 100, 100, 0.2);
     }
+    body.dark-mode input[type="text"]:focus {
+        border-color: #ff9999;
+        box-shadow: 0 0 0 3px rgba(255, 100, 100, 0.3);
+    }
+
     #suggestions {
       max-width: 600px;
-      margin: 0 auto 10px auto;
+      margin: 0 auto 15px auto; /* More margin */
       text-align: center;
-      font-size: 14px;
+      font-size: 15px;
       color: #800000;
       font-weight: 600;
     }
     #suggestions a {
       color: #800000;
-      text-decoration: underline;
-      font-weight: 600;
+      text-decoration: none; /* No underline */
+      font-weight: 700;
+      transition: color 0.3s;
     }
+    #suggestions a:hover {
+        color: #b30000; /* Darker red on hover */
+        text-decoration: underline; /* Underline on hover */
+    }
+    body.dark-mode #suggestions {
+        color: #ff8888;
+    }
+    body.dark-mode #suggestions a {
+        color: #ff6666;
+    }
+    body.dark-mode #suggestions a:hover {
+        color: #ff9999;
+    }
+
     #countdown-container {
       max-width: 600px;
-      margin: 10px auto 30px auto;
-      padding: 15px;
+      margin: 15px auto 35px auto; /* More margin */
+      padding: 20px; /* More padding */
       background: #fff;
-      border-radius: 8px;
+      border-radius: 10px; /* More rounded */
       border: 1px solid #800000;
       text-align: center;
-      transition: background 0.3s, color 0.3s, border-color 0.3s;
+      transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Stronger shadow */
     }
     body.dark-mode #countdown-container {
-      background: #222;
+      background: #2a2a2a;
       border-color: #bb4444;
       color: #eee;
+      box-shadow: 0 4px 12px rgba(255, 100, 100, 0.25);
     }
     #countdown-title {
-      font-size: 22px;
+      font-size: 24px; /* Slightly larger */
       font-weight: 700;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       color: #800000;
       transition: color 0.3s;
     }
@@ -99,7 +147,7 @@
       color: #ff6666;
     }
     #countdown {
-      font-size: 28px;
+      font-size: 32px; /* Larger font */
       font-weight: 700;
       color: #000;
       letter-spacing: 2px;
@@ -108,107 +156,133 @@
     body.dark-mode #countdown {
       color: #eee;
     }
+
     #columns-container {
       max-width: 600px;
-      margin: 0 auto 40px auto;
+      margin: 0 auto 50px auto; /* More bottom margin */
     }
     .column {
       background: #fff;
-      padding: 15px 20px;
-      margin-bottom: 12px;
-      border-right: 5px solid #800000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 20px 25px; /* More padding */
+      margin-bottom: 15px; /* More margin */
+      border-right: 6px solid #800000; /* Thicker border */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Stronger shadow */
       scroll-margin-top: 20px;
-      border-radius: 6px;
-      transition: background 0.3s, color 0.3s, border-color 0.3s;
+      border-radius: 8px; /* More rounded */
+      transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
     }
     body.dark-mode .column {
-      background: #222;
+      background: #2a2a2a;
       color: #eee;
       border-color: #bb4444;
-      box-shadow: 0 2px 5px rgba(255, 100, 100, 0.3);
+      box-shadow: 0 4px 10px rgba(255, 100, 100, 0.2);
     }
     .column strong {
-      font-size: 18px;
+      font-size: 20px; /* Slightly larger */
       color: #550000;
       display: block;
       text-align: center;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       transition: color 0.3s;
+      font-weight: 700;
     }
     body.dark-mode .column strong {
       color: #ff6666;
     }
     .column .name {
-      font-size: 18px;
+      font-size: 17px; /* Slightly smaller for names */
       color: #000000;
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px; /* Reduced margin */
       transition: color 0.3s;
     }
     body.dark-mode .column .name {
       color: #eee;
     }
+    /* Last name in a column should not have bottom margin */
+    .column .name:last-child {
+        margin-bottom: 0;
+    }
+
     #logo-container {
       position: fixed;
-      bottom: 10px;
+      bottom: 15px; /* Slightly higher */
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(255, 255, 255, 0.9);
-      padding: 5px 12px;
-      border-radius: 6px;
-      box-shadow: 0 0 6px rgba(0,0,0,0.2);
+      background: rgba(255, 255, 255, 0.95); /* Less transparent */
+      padding: 8px 15px; /* More padding */
+      border-radius: 8px; /* More rounded */
+      box-shadow: 0 0 8px rgba(0,0,0,0.25); /* Stronger shadow */
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
+      gap: 4px; /* More space */
       z-index: 9999;
       font-weight: bold;
       font-family: 'Cairo', sans-serif;
-      font-size: 12px;
+      font-size: 13px; /* Slightly larger */
       color: #800000;
-      transition: background 0.3s, color 0.3s;
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
     }
     body.dark-mode #logo-container {
-      background: rgba(34, 34, 34, 0.9);
+      background: rgba(34, 34, 34, 0.95);
       color: #ff6666;
-      box-shadow: 0 0 6px #ff4444;
+      box-shadow: 0 0 8px #ff4444;
     }
     #logo-container img {
-      height: 40px;
+      height: 45px; /* Slightly larger logo */
       width: auto;
       display: block;
     }
     #logo-container span {
       color: #000;
-      font-size: 10px;
+      font-size: 11px; /* Slightly larger */
       transition: color 0.3s;
     }
     body.dark-mode #logo-container span {
       color: #ff9999;
     }
+    #offline-message {
+        display: none;
+        text-align: center;
+        color: #d32f2f;
+        font-weight: bold;
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #ffebee;
+        border-radius: 5px;
+        border: 1px solid #ef9a9a;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    body.dark-mode #offline-message {
+        color: #ff9999;
+        background-color: #4a1c1c;
+        border-color: #8b0000;
+    }
   </style>
 </head>
 <body>
   <div id="logo-container">
-    <img src="logo.png" alt="شعار Khadem" />
+    <img src="logo.png" alt="شعار Khadem - خادم" />
     <span>@khademcrs</span>
   </div>
 
   <div id="language-switcher">
-    <button onclick="switchLanguage('ar')">العربية</button>
-    <button onclick="switchLanguage('en')">English</button>
-    <button onclick="switchLanguage('fa')">فارسی</button>
+    <button onclick="switchLanguage('ar')" aria-label="تبديل إلى اللغة العربية">العربية</button>
+    <button onclick="switchLanguage('en')" aria-label="Switch to English">English</button>
+    <button onclick="switchLanguage('fa')" aria-label="تغییر به زبان فارسی">فارسی</button>
     <button id="dark-mode-toggle" title="تبديل الوضع الداكن" aria-label="تبديل الوضع الداكن">🌗</button>
   </div>
 
   <h1>🏴 دليل مشاية الأربعين 🏴</h1>
 
-  <input type="text" id="search" placeholder="ابحث برقم العمود، الاسم..." />
+  <input type="text" id="search" placeholder="ابحث برقم العمود، الاسم..." aria-label="مربع البحث عن الأعمدة والأسماء" />
 
   <p id="suggestions">
     للاقتراح أو التعديل،
-    <a href="https://forms.gle/U6CPCJba3KsJKBHW9" target="_blank">اضغط هنا</a>
+    <a href="https://forms.gle/U6CPCJba3KsJKBHW9" target="_blank" rel="noopener noreferrer">اضغط هنا</a>
   </p>
 
   <div id="countdown-container">
@@ -216,58 +290,101 @@
     <div id="countdown"></div>
   </div>
 
+  <div id="offline-message">
+    أنت غير متصل بالإنترنت. قد تكون البيانات قديمة.
+  </div>
+
   <div id="columns-container"></div>
 
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
   <script>
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch(error => {
+            console.error('Service Worker registration failed:', error);
+          });
+      });
+    }
+
     const countdownDate = new Date('2025-08-15T00:00:00+03:00').getTime();
-    let currentLang = 'ar';
+    let currentLang = localStorage.getItem('arbaeenGuideLang') || 'ar'; // Load last used language
     let columnsData = [];
+    let fuse; // For fuzzy search
+
+    const uiTexts = {
+      ar: {
+        heading: '🏴 دليل مشاية الأربعين 🏴',
+        countdownTitle: 'العد التنازلي ليوم الأربعين',
+        searchInput: 'ابحث برقم العمود، الاسم...',
+        suggestions: `للاقتراح أو التعديل، <a href="https://forms.gle/U6CPCJba3KsJKBHW9" target="_blank" rel="noopener noreferrer">اضغط هنا</a>`,
+        noResults: 'لا توجد نتائج.',
+        offlineMessage: 'أنت غير متصل بالإنترنت. قد تكون البيانات قديمة.',
+        columnPrefix: 'العمود',
+        dayUnit: 'يوم'
+      },
+      en: {
+        heading: '🏴 Arbaeen Processions Guide 🏴',
+        countdownTitle: 'Countdown to Arbaeen Day',
+        searchInput: 'Search by column number, name...',
+        suggestions: `To suggest edits or additions, <a href="https://forms.gle/U6CPCJba3KsJKBHW9" target="_blank" rel="noopener noreferrer">click here</a>`,
+        noResults: 'No results found.',
+        offlineMessage: 'You are offline. Data might be outdated.',
+        columnPrefix: 'Column',
+        dayUnit: 'day'
+      },
+      fa: {
+        heading: '🏴 راهنمای موکب‌های اربعین 🏴',
+        countdownTitle: 'شمارش معکوس تا روز اربعین',
+        searchInput: 'جستجو بر اساس شماره ستون، نام...',
+        suggestions: `برای پیشنهاد یا ویرایش، <a href="https://forms.gle/U6CPCJba3KsJKBHW9" target="_blank" rel="noopener noreferrer">اینجا کلیک کنید</a>`,
+        noResults: 'نتیجه‌ای یافت نشد.',
+        offlineMessage: 'شما آفلاین هستید. ممکن است داده‌ها قدیمی باشند.',
+        columnPrefix: 'ستون',
+        dayUnit: 'روز'
+      }
+    };
 
     function updateCountdown() {
       const now = new Date().getTime();
       const diff = countdownDate - now;
-      if(diff <= 0) {
-        document.getElementById('countdown-container').style.display = 'none';
+      const countdownContainer = document.getElementById('countdown-container');
+
+      if (diff <= 0) {
+        countdownContainer.style.display = 'none';
         return;
+      } else {
+        countdownContainer.style.display = 'block'; // Ensure it's visible if search is cleared
       }
+
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      const dayText = uiTexts[currentLang].dayUnit + (currentLang === 'en' && days !== 1 ? 's' : '');
+
       document.getElementById('countdown').textContent =
-        days + ' يوم ' + hours.toString().padStart(2, '0') + ':' +
+        days + ' ' + dayText + ' ' + hours.toString().padStart(2, '0') + ':' +
         minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
     }
 
     function updateUIText(lang) {
-      const title = document.getElementById('countdown-title');
-      const heading = document.querySelector('h1');
-      const input = document.getElementById('search');
-      const suggestions = document.getElementById('suggestions');
-
-      if (lang === 'en') {
-        heading.textContent = '🏴 Arbaeen Processions Guide 🏴';
-        title.textContent = 'Countdown to Arbaeen Day';
-        input.placeholder = 'Search by column number, name...';
-        suggestions.innerHTML = `To suggest edits or additions, 
-          <a href="https://forms.gle/U6CPCJba3KsJKBHW9" target="_blank">click here</a>`;
-      } else if (lang === 'fa') {
-        heading.textContent = '🏴 راهنمای موکب‌های اربعین 🏴';
-        title.textContent = 'شمارش معکوس تا روز اربعین';
-        input.placeholder = 'جستجو بر اساس شماره ستون، نام...';
-        suggestions.innerHTML = `برای پیشنهاد یا ویرایش، 
-          <a href="https://forms.gle/U6CPCJba3KsJKBHW9" target="_blank">اینجا کلیک کنید</a>`;
-      } else {
-        heading.textContent = '🏴 دليل مشاية الأربعين 🏴';
-        title.textContent = 'العد التنازلي ليوم الأربعين';
-        input.placeholder = 'ابحث برقم العمود، الاسم...';
-        suggestions.innerHTML = `للاقتراح أو التعديل،
-          <a href="https://forms.gle/U6CPCJba3KsJKBHW9" target="_blank">اضغط هنا</a>`;
-      }
+      const texts = uiTexts[lang];
+      document.querySelector('h1').textContent = texts.heading;
+      document.getElementById('countdown-title').textContent = texts.countdownTitle;
+      document.getElementById('search').placeholder = texts.searchInput;
+      document.getElementById('suggestions').innerHTML = texts.suggestions;
+      document.getElementById('offline-message').textContent = texts.offlineMessage;
     }
 
     function switchLanguage(lang) {
       currentLang = lang;
+      localStorage.setItem('arbaeenGuideLang', lang); // Save last used language
       document.documentElement.lang = lang;
       document.documentElement.dir = (lang === 'en') ? 'ltr' : 'rtl';
       updateUIText(lang);
@@ -275,71 +392,132 @@
     }
 
     async function loadData() {
+      const container = document.getElementById('columns-container');
+      const offlineMessage = document.getElementById('offline-message');
+      offlineMessage.style.display = 'none'; // Hide by default
+
       try {
         const res = await fetch(`data-${currentLang}.json`);
-        if (!res.ok) throw new Error('فشل تحميل البيانات');
+        if (!res.ok) throw new Error('Failed to load data from network.');
         columnsData = await res.json();
         renderColumns(columnsData);
-      } catch(e) {
-        document.getElementById('columns-container').innerHTML = '<p style="text-align:center;color:red;">' + e.message + '</p>';
+        // Cache data for offline use
+        if ('caches' in window) {
+            const cache = await caches.open('arbaeen-data-cache');
+            await cache.put(new Request(`data-${currentLang}.json`), new Response(JSON.stringify(columnsData)));
+        }
+        initializeFuse(); // Initialize Fuse.js after data loads
+      } catch (e) {
+        console.error('Error loading data:', e);
+        // Try to load from cache
+        if ('caches' in window) {
+            const cache = await caches.open('arbaeen-data-cache');
+            const cachedResponse = await cache.match(new Request(`data-${currentLang}.json`));
+            if (cachedResponse) {
+                columnsData = await cachedResponse.json();
+                renderColumns(columnsData);
+                offlineMessage.style.display = 'block'; // Show offline message
+                initializeFuse();
+            } else {
+                container.innerHTML = `<p style="text-align:center;color:red;">${uiTexts[currentLang].noResults}</p>`;
+            }
+        } else {
+             container.innerHTML = `<p style="text-align:center;color:red;">${uiTexts[currentLang].noResults}</p>`;
+        }
       }
+    }
+
+    function initializeFuse() {
+        const options = {
+            keys: [
+                'column',
+                'names'
+            ],
+            includeScore: true,
+            threshold: 0.3, // Lower threshold for more strict matches, higher for looser
+            ignoreLocation: true, // Search anywhere in the string
+            findAllMatches: true,
+            minMatchCharLength: 2,
+        };
+        fuse = new Fuse(columnsData, options);
     }
 
     function renderColumns(data) {
       const container = document.getElementById('columns-container');
       container.innerHTML = '';
-      if(data.length === 0) {
-        container.innerHTML = '<p style="text-align:center;">لا توجد نتائج.</p>';
+      if (data.length === 0) {
+        container.innerHTML = `<p style="text-align:center;">${uiTexts[currentLang].noResults}</p>`;
         return;
       }
+      // Sort by column number before rendering
       data.sort((a, b) => a.column - b.column);
       data.forEach(col => {
         const colDiv = document.createElement('div');
         colDiv.className = 'column';
         colDiv.id = 'column-' + col.column;
         const namesHtml = col.names.map(name => `<div class="name">${name}</div>`).join('');
-        colDiv.innerHTML = `<strong>العمود ${col.column}</strong>${namesHtml}`;
+        colDiv.innerHTML = `<strong>${uiTexts[currentLang].columnPrefix} ${col.column}</strong>${namesHtml}`;
         container.appendChild(colDiv);
       });
     }
 
     document.getElementById('search').addEventListener('input', e => {
-      const q = e.target.value.trim().toLowerCase();
-      if(q === '') {
-        document.getElementById('countdown-container').style.display = 'block';
-        document.getElementById('suggestions').style.display = 'block';
+      const q = e.target.value.trim();
+      const countdownContainer = document.getElementById('countdown-container');
+      const suggestions = document.getElementById('suggestions');
+
+      if (q === '') {
+        countdownContainer.style.display = 'block';
+        suggestions.style.display = 'block';
         renderColumns(columnsData);
         return;
       }
-      document.getElementById('countdown-container').style.display = 'none';
-      document.getElementById('suggestions').style.display = 'none';
-      const isNumber = !isNaN(q) && q !== '';
-      let filtered = [];
-      if(isNumber) {
-        filtered = columnsData.filter(c => c.column.toString() === q);
-        if(filtered.length === 1) {
-          renderColumns(filtered);
-          setTimeout(() => {
-            document.getElementById('column-' + q)?.scrollIntoView({behavior: 'smooth', block: 'start'});
-          }, 100);
-          return;
-        }
+      
+      countdownContainer.style.display = 'none';
+      suggestions.style.display = 'none';
+
+      let filteredResults = [];
+      if (fuse) {
+          const searchResults = fuse.search(q);
+          filteredResults = searchResults.map(result => result.item);
+      } else {
+          // Fallback if fuse.js isn't loaded for some reason (shouldn't happen)
+          const isNumber = !isNaN(q) && q !== '';
+          if (isNumber) {
+              filteredResults = columnsData.filter(c => c.column.toString() === q);
+          } else {
+              filteredResults = columnsData.filter(c => 
+                  c.names.some(name => name.toLowerCase().includes(q.toLowerCase())) || 
+                  c.column.toString().includes(q)
+              );
+          }
       }
-      filtered = columnsData.filter(c => 
-        c.names.some(name => name.toLowerCase().includes(q)) || 
-        c.column.toString().includes(q)
-      );
-      renderColumns(filtered);
+      
+      renderColumns(filteredResults);
+
+      // Scroll to the first result if there's only one column number match
+      if (filteredResults.length === 1 && !isNaN(q) && filteredResults[0].column.toString() === q) {
+        setTimeout(() => {
+          document.getElementById('column-' + q)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
     });
 
     document.getElementById('dark-mode-toggle').addEventListener('click', () => {
       document.body.classList.toggle('dark-mode');
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      localStorage.setItem('arbaeenDarkMode', isDarkMode); // Save dark mode preference
     });
 
+    // Apply dark mode preference on load
+    if (localStorage.getItem('arbaeenDarkMode') === 'true') {
+      document.body.classList.add('dark-mode');
+    }
+
+    // Initialize UI and data
+    switchLanguage(currentLang); // Set initial language and load data based on saved preference
     setInterval(updateCountdown, 1000);
-    updateCountdown();
-    updateUIText(currentLang);
-    loadData();
+    updateCountdown(); // Call once immediately to avoid delay
   </script>
 </body>
 </html>
