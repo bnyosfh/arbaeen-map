@@ -15,18 +15,8 @@
     h1 {
       color: #800000;
       font-size: 28px;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-    #countdown-container {
-      text-align: center;
-      font-size: 16px;
       margin-bottom: 20px;
-      color: #333;
-    }
-    #countdown {
-      font-weight: bold;
-      color: #800000;
+      text-align: center;
     }
     input[type="text"] {
       padding: 8px;
@@ -42,13 +32,31 @@
       max-width: 600px;
       margin: 0 auto 30px auto;
       text-align: center;
-      font-size: 14px;
-      color: #333;
+      font-size: 12px;
+      color: #800000;
+      font-weight: normal;
     }
     #suggestions a {
-      color: #800000;
+      color: inherit;
       text-decoration: none;
+      font-weight: normal;
+    }
+    #countdown-title {
+      text-align: center;
+      color: #800000;
+      font-size: 22px;
       font-weight: bold;
+      margin-bottom: 6px;
+      margin-top: 0;
+    }
+    #countdown-timer {
+      text-align: center;
+      color: #000;
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-family: monospace;
     }
     #columns-container {
       max-width: 600px;
@@ -117,10 +125,9 @@
 
   <h1>🏴 دليل مشاية الأربعين 🏴</h1>
 
-  <!-- العد التنازلي -->
   <div id="countdown-container">
-    <span>العد التنازلي ليوم الأربعين:</span>
-    <span id="countdown">00 يوم</span>
+    <p id="countdown-title">العد التنازلي ليوم الأربعين</p>
+    <p id="countdown-timer"></p>
   </div>
 
   <input type="text" id="search" placeholder="ابحث برقم العمود، الاسم..." />
@@ -133,28 +140,6 @@
   <div id="columns-container"></div>
 
   <script>
-    // حساب العد التنازلي
-    const countdownEl = document.getElementById("countdown");
-    const countdownContainer = document.getElementById("countdown-container");
-    const arbaeenDate = new Date("2025-08-15T00:00:00");
-
-    function updateCountdown() {
-      const now = new Date();
-      const diff = arbaeenDate - now;
-
-      if (diff <= 0) {
-        countdownContainer.style.display = "none";
-        return;
-      }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      countdownEl.textContent = `${days} يوم`;
-    }
-
-    updateCountdown();
-    setInterval(updateCountdown, 60 * 1000); // يحدث كل دقيقة
-
-    // البيانات
     let columnsData = [];
 
     async function loadData() {
@@ -177,6 +162,7 @@
         return;
       }
 
+      // فرز البيانات حسب رقم العمود تلقائياً
       data.sort((a, b) => a.column - b.column);
 
       data.forEach(col => {
@@ -184,6 +170,7 @@
         colDiv.className = 'column';
         colDiv.id = 'column-' + col.column;
 
+        // دمج جميع الأسماء في أسطر منفصلة
         const namesHtml = col.names.map(name => `<div class="name">${name}</div>`).join('');
 
         colDiv.innerHTML = `
@@ -198,16 +185,21 @@
     document.getElementById('search').addEventListener('input', e => {
       const q = e.target.value.trim().toLowerCase();
 
-      // إخفاء العد التنازلي وسطر الاقتراحات وقت البحث
-      document.getElementById("countdown-container").style.display = q ? "none" : "block";
-      document.getElementById("suggestions").style.display = q ? "none" : "block";
+      const countdownContainer = document.getElementById('countdown-container');
+      const suggestions = document.getElementById('suggestions');
 
       if(q === '') {
+        countdownContainer.style.display = 'block';
+        suggestions.style.display = 'block';
         renderColumns(columnsData);
         return;
+      } else {
+        countdownContainer.style.display = 'none';
+        suggestions.style.display = 'none';
       }
 
       const isNumber = !isNaN(q) && q !== '';
+
       let filtered = [];
 
       if(isNumber) {
@@ -229,6 +221,38 @@
       renderColumns(filtered);
     });
 
+    function startCountdown() {
+      const countdownTitle = document.getElementById('countdown-title');
+      const countdownTimer = document.getElementById('countdown-timer');
+      const countdownContainer = document.getElementById('countdown-container');
+
+      // تاريخ 15 أغسطس 2025 - يوم الجمعة (يوم الأربعين)
+      const targetDate = new Date('2025-08-15T00:00:00');
+
+      function updateCountdown() {
+        const now = new Date();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+          countdownContainer.style.display = 'none';
+          clearInterval(intervalId);
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        countdownTimer.textContent = 
+          `${days} يوم ${hours.toString().padStart(2,'0')} ساعة ${minutes.toString().padStart(2,'0')} دقيقة ${seconds.toString().padStart(2,'0')} ثانية`;
+      }
+
+      updateCountdown();
+      const intervalId = setInterval(updateCountdown, 1000);
+    }
+
+    startCountdown();
     loadData();
   </script>
 </body>
