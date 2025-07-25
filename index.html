@@ -52,6 +52,13 @@
       border-radius: 8px;
       box-sizing: border-box;
       background-color: #fff;
+      color: #000;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+    body.dark-mode input[type="text"] {
+      background-color: #222;
+      color: #eee;
+      border-color: #bb4444;
     }
     #suggestions {
       max-width: 600px;
@@ -74,18 +81,32 @@
       border-radius: 8px;
       border: 1px solid #800000;
       text-align: center;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
+    body.dark-mode #countdown-container {
+      background: #222;
+      border-color: #bb4444;
+      color: #eee;
     }
     #countdown-title {
       font-size: 22px;
       font-weight: 700;
       margin-bottom: 10px;
       color: #800000;
+      transition: color 0.3s;
+    }
+    body.dark-mode #countdown-title {
+      color: #ff6666;
     }
     #countdown {
       font-size: 28px;
       font-weight: 700;
       color: #000;
       letter-spacing: 2px;
+      transition: color 0.3s;
+    }
+    body.dark-mode #countdown {
+      color: #eee;
     }
     #columns-container {
       max-width: 600px;
@@ -99,6 +120,13 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       scroll-margin-top: 20px;
       border-radius: 6px;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
+    body.dark-mode .column {
+      background: #222;
+      color: #eee;
+      border-color: #bb4444;
+      box-shadow: 0 2px 5px rgba(255, 100, 100, 0.3);
     }
     .column strong {
       font-size: 18px;
@@ -106,12 +134,20 @@
       display: block;
       text-align: center;
       margin-bottom: 6px;
+      transition: color 0.3s;
+    }
+    body.dark-mode .column strong {
+      color: #ff6666;
     }
     .column .name {
       font-size: 18px;
       color: #000000;
       text-align: center;
       margin-bottom: 10px;
+      transition: color 0.3s;
+    }
+    body.dark-mode .column .name {
+      color: #eee;
     }
     #logo-container {
       position: fixed;
@@ -131,6 +167,12 @@
       font-family: 'Cairo', sans-serif;
       font-size: 12px;
       color: #800000;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark-mode #logo-container {
+      background: rgba(34, 34, 34, 0.9);
+      color: #ff6666;
+      box-shadow: 0 0 6px #ff4444;
     }
     #logo-container img {
       height: 40px;
@@ -140,6 +182,10 @@
     #logo-container span {
       color: #000;
       font-size: 10px;
+      transition: color 0.3s;
+    }
+    body.dark-mode #logo-container span {
+      color: #ff9999;
     }
   </style>
 </head>
