@@ -161,48 +161,66 @@
       max-width: 600px;
       margin: 0 auto 50px auto; /* More bottom margin */
     }
+
+    /* --- NEW COLUMN DESIGN STYLES --- */
     .column {
-      background: #fff;
-      padding: 20px 25px; /* More padding */
-      margin-bottom: 15px; /* More margin */
-      border-right: 6px solid #800000; /* Thicker border */
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Stronger shadow */
-      scroll-margin-top: 20px;
-      border-radius: 8px; /* More rounded */
-      transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+      display: flex; /* To arrange header and content side by side */
+      background: #f9f9f9; /* Light background */
+      margin-bottom: 15px;
+      border-radius: 10px; /* Rounded corners */
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden; /* To contain the floated header */
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+      padding: 0; /* Remove padding from the main container */
+      scroll-margin-top: 20px; /* Keep for scrolling to column */
     }
     body.dark-mode .column {
       background: #2a2a2a;
-      color: #eee;
-      border-color: #bb4444;
-      box-shadow: 0 4px 10px rgba(255, 100, 100, 0.2);
+      box-shadow: 0 2px 8px rgba(255, 100, 100, 0.2);
     }
-    .column strong {
-      font-size: 20px; /* Slightly larger */
-      color: #550000;
-      display: block;
+
+    .column-header {
+      background-color: #800000; /* Dark red background */
+      color: #fff;
+      padding: 15px 20px;
       text-align: center;
-      margin-bottom: 8px;
-      transition: color 0.3s;
-      font-weight: 700;
+      min-width: 80px; /* Adjust as needed to fit the number */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0; /* Prevent it from shrinking */
     }
-    body.dark-mode .column strong {
-      color: #ff6666;
+
+    .column-header strong {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #fff; /* Ensure text is white */
+      display: block; /* Ensure it takes full width */
+      text-align: center; /* Center the "العمود" text */
     }
+
+    .column-header span {
+      font-size: 28px; /* Larger font for column number */
+      font-weight: bold;
+      color: #fff; /* Ensure number is white */
+      line-height: 1; /* Adjust line height for the number */
+    }
+
     .column .name {
-      font-size: 17px; /* Slightly smaller for names */
-      color: #000000;
-      text-align: center;
-      margin-bottom: 8px; /* Reduced margin */
-      transition: color 0.3s;
+      font-size: 17px;
+      color: #333;
+      text-align: right; /* Align text to the right */
+      padding: 15px 20px; /* Add padding to the content area */
+      flex-grow: 1; /* Allow the name section to take remaining space */
+      box-sizing: border-box; /* Include padding in width calculation */
+      margin-bottom: 0; /* Remove default bottom margin */
     }
     body.dark-mode .column .name {
       color: #eee;
     }
-    /* Last name in a column should not have bottom margin */
-    .column .name:last-child {
-        margin-bottom: 0;
-    }
+    /* --- END NEW COLUMN DESIGN STYLES --- */
 
     #logo-container {
       position: fixed;
@@ -324,7 +342,7 @@
         suggestions: `للاقتراح أو التعديل، <a href="https://forms.gle/U6CPCJba3KsJKBHW9" target="_blank" rel="noopener noreferrer">اضغط هنا</a>`,
         noResults: 'لا توجد نتائج.',
         offlineMessage: 'أنت غير متصل بالإنترنت. قد تكون البيانات قديمة.',
-        columnPrefix: 'العمود',
+        columnText: 'العمود', // Added for column header
         dayUnit: 'يوم'
       },
       en: {
@@ -334,7 +352,7 @@
         suggestions: `To suggest edits or additions, <a href="https://forms.gle/U6CPCJba3KsJKBHW9" target="_blank" rel="noopener noreferrer">click here</a>`,
         noResults: 'No results found.',
         offlineMessage: 'You are offline. Data might be outdated.',
-        columnPrefix: 'Column',
+        columnText: 'Column', // Added for column header
         dayUnit: 'day'
       },
       fa: {
@@ -344,7 +362,7 @@
         suggestions: `برای پیشنهاد یا ویرایش، <a href="https://forms.gle/U6CPCJba3KsJKBHW9" target="_blank" rel="noopener noreferrer">اینجا کلیک کنید</a>`,
         noResults: 'نتیجه‌ای یافت نشد.',
         offlineMessage: 'شما آفلاین هستید. ممکن است داده‌ها قدیمی باشند.',
-        columnPrefix: 'ستون',
+        columnText: 'ستون', // Added for column header
         dayUnit: 'روز'
       }
     };
@@ -380,6 +398,8 @@
       document.getElementById('search').placeholder = texts.searchInput;
       document.getElementById('suggestions').innerHTML = texts.suggestions;
       document.getElementById('offline-message').textContent = texts.offlineMessage;
+      // Re-render columns to update "العمود" text in headers if language changes
+      renderColumns(columnsData); 
     }
 
     function switchLanguage(lang) {
@@ -455,8 +475,20 @@
         const colDiv = document.createElement('div');
         colDiv.className = 'column';
         colDiv.id = 'column-' + col.column;
-        const namesHtml = col.names.map(name => `<div class="name">${name}</div>`).join('');
-        colDiv.innerHTML = `<strong>${uiTexts[currentLang].columnPrefix} ${col.column}</strong>${namesHtml}`;
+        
+        // --- UPDATED HTML STRUCTURE FOR EACH COLUMN ---
+        const namesHtml = col.names.map(name => `<div class="name-item">${name}</div>`).join('');
+        colDiv.innerHTML = `
+          <div class="column-header">
+            <strong>${uiTexts[currentLang].columnText}</strong>
+            <span>${col.column.toString().padStart(2, '0')}</span>
+          </div>
+          <div class="name">
+            ${namesHtml}
+          </div>
+        `;
+        // --- END UPDATED HTML STRUCTURE ---
+        
         container.appendChild(colDiv);
       });
     }
