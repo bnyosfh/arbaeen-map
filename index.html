@@ -2,106 +2,195 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🏴 دليل مشاية الأربعين 🏴</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>دليل مشاية الأربعين</title>
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <style>
     body {
       font-family: sans-serif;
-      background-color: #f8f8f8;
+      background: #f9f9f9;
       padding: 20px;
-      color: #333;
+      direction: rtl;
+      line-height: 1.6;
     }
-
     h1 {
-      text-align: center;
+      color: #800000;
+      font-size: 28px;
       margin-bottom: 20px;
-    }
-
-    input {
-      display: block;
-      margin: 10px auto 20px;
-      padding: 10px;
-      width: 90%;
-      max-width: 400px;
-      font-size: 16px;
-    }
-
-    .result {
-      background-color: white;
-      padding: 15px;
-      margin: 10px auto;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      max-width: 700px;
-    }
-
-    .result strong {
-      display: block;
-      font-size: 18px;
-      margin-bottom: 5px;
-      color: #111;
-    }
-
-    .footer {
-      margin-top: 50px;
       text-align: center;
-      font-size: 14px;
-      color: #666;
     }
-
-    .footer a {
-      color: #007bff;
+    input[type="text"] {
+      padding: 8px;
+      font-size: 16px;
+      margin: 0 auto 30px auto;
+      max-width: 600px;
+      display: block;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    #columns-container {
+      max-width: 600px;
+      margin: 0 auto 40px auto;
+    }
+    .column {
+      background: #fff;
+      padding: 15px 20px;
+      margin-bottom: 12px;
+      border-right: 5px solid #800000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      scroll-margin-top: 20px;
+      border-radius: 6px;
+    }
+    .column strong {
+      font-size: 18px;
+      color: #550000;
+      display: block;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .column .name {
+      font-size: 18px;
+      color: #000000;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    /* شعار أسفل الصفحة */
+    #logo-container {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      padding: 5px 12px;
+      border-radius: 6px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      z-index: 9999;
+      font-weight: bold;
+      font-family: sans-serif;
+      font-size: 12px;
+      color: #800000;
+    }
+    #logo-container img {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+    #logo-container span {
+      color: #000;
+      font-size: 10px;
+    }
+    /* رسالة الاقتراحات */
+    #suggestions {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #555;
+    }
+    #suggestions a {
+      color: #800000;
       text-decoration: none;
+    }
+    #suggestions a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <h1>🏴 دليل مشاية الأربعين 🏴</h1>
-  <input type="text" id="search" placeholder="ابحث عن موكب، حسينية، مضيف..." />
-  <div id="results"></div>
 
-  <div class="footer">
-    <p>للاقتراحات أو التعديلات أو الإضافة تواصل عبر الإيميل التالي:<br />
-    <a href="mailto:your@email.com">khademcrs@gmail.com</a></p>
-    <p>📌 يمكنك حفظ هذه الصفحة واستخدامها بدون إنترنت</p>
+  <!-- شعار @khademcrs أسفل الصفحة -->
+  <div id="logo-container">
+    <img src="logo.png" alt="شعار Khadem" />
+    <span>@khademcrs</span>
   </div>
 
+  <h1>🏴 دليل مشاية الأربعين 🏴</h1>
+
+  <input type="text" id="search" placeholder="ابحث برقم العمود، الاسم..." />
+
+  <div id="columns-container"></div>
+
+  <p id="suggestions">
+    للاقتراحات والتعديلات تواصل عبر الإيميل: 
+    <a href="mailto:khademcrs@gmail.com">khademcrs@gmail.com</a>
+  </p>
+
   <script>
-    let data = [];
+    let columnsData = [];
 
-    fetch('data.json')
-      .then(response => response.json())
-      .then(json => {
-        data = json;
-        data.sort((a, b) => a.column - b.column); // الترتيب حسب رقم العمود
+    async function loadData() {
+      try {
+        const res = await fetch('data.json');
+        if (!res.ok) throw new Error('فشل تحميل البيانات');
+        columnsData = await res.json();
+        columnsData.sort((a, b) => a.column - b.column); // فرز تلقائي حسب رقم العمود
+        renderColumns(columnsData);
+      } catch(e) {
+        document.getElementById('columns-container').innerHTML = '<p style="text-align:center;color:red;">' + e.message + '</p>';
+      }
+    }
+
+    function renderColumns(data) {
+      const container = document.getElementById('columns-container');
+      container.innerHTML = '';
+
+      if(data.length === 0) {
+        container.innerHTML = '<p style="text-align:center;">لا توجد نتائج.</p>';
+        return;
+      }
+
+      data.forEach(col => {
+        const colDiv = document.createElement('div');
+        colDiv.className = 'column';
+        colDiv.id = 'column-' + col.column;
+
+        let namesHtml = col.names.map(name => `<div class="name">${name}</div>`).join('');
+
+        colDiv.innerHTML = `
+          <strong>العمود ${col.column}</strong>
+          ${namesHtml}
+        `;
+
+        container.appendChild(colDiv);
       });
+    }
 
-    const searchInput = document.getElementById('search');
-    const resultsDiv = document.getElementById('results');
+    document.getElementById('search').addEventListener('input', e => {
+      const q = e.target.value.trim().toLowerCase();
 
-    searchInput.addEventListener('input', () => {
-      const value = searchInput.value.trim();
-      resultsDiv.innerHTML = '';
+      if(q === '') {
+        renderColumns(columnsData);
+        return;
+      }
 
-      if (value.length === 0) return;
+      const isNumber = !isNaN(q) && q !== '';
 
-      const filtered = data.filter(item =>
-        item.names.some(name => name.includes(value))
+      let filtered = [];
+
+      if(isNumber) {
+        filtered = columnsData.filter(c => c.column.toString() === q);
+        if(filtered.length === 1) {
+          renderColumns(filtered);
+          setTimeout(() => {
+            document.getElementById('column-' + q)?.scrollIntoView({behavior: 'smooth', block: 'start'});
+          }, 100);
+          return;
+        }
+      }
+
+      filtered = columnsData.filter(c => 
+        c.names.some(name => name.toLowerCase().includes(q)) || 
+        c.column.toString().includes(q)
       );
 
-      filtered.forEach(item => {
-        const result = document.createElement('div');
-        result.className = 'result';
-        result.innerHTML = `
-          <strong>📍 عمود رقم ${item.column}</strong>
-          <ul>
-            ${item.names.map(n => `<li>${n}</li>`).join('')}
-          </ul>
-        `;
-        resultsDiv.appendChild(result);
-      });
+      renderColumns(filtered);
     });
+
+    loadData();
   </script>
 </body>
 </html>
