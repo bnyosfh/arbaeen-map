@@ -405,9 +405,9 @@
   </div>
 
   <div id="language-switcher">
-    <button onclick="switchLanguage('ar')" aria-label="تبديل إلى اللغة العربية">العربية</button>
-    <button onclick="switchLanguage('en')" aria-label="Switch to English">English</button>
-    <button onclick="switchLanguage('fa')" aria-label="تغییر به زبان فارسی">فارسی</button>
+    <button onclick="switchLanguage('ar')" aria-label="تبديل إلى اللغة العربية">ع</button>
+    <button onclick="switchLanguage('en')" aria-label="Switch to English">E</button>
+    <button onclick="switchLanguage('fa')" aria-label="تغییر به زبان فارسی">ف</button>
     <button id="dark-mode-toggle" title="تبديل الوضع الداكن" aria-label="تبديل الوضع الداكن">🌗</button>
   </div>
 
@@ -432,7 +432,7 @@
   <div id="info-section">
     <div class="info-item">
       <div class="info-header">
-        <span>🏴 معلومات مهمة للمشاة  🏴</span>
+        <span>معلومات مهمة للمشاة</span>
         <span class="arrow">&#9658;</span> </div>
       <div class="info-content">
         <p><strong>⬅️ نقطة الانطلاق</strong></p>
@@ -533,7 +533,8 @@
         noResults: 'لا توجد نتائج.',
         offlineMessage: 'أنت غير متصل بالإنترنت. قد تكون البيانات قديمة.',
         columnText: 'العمود', // Added for column header
-        dayUnit: 'يوم'
+        dayUnit: 'يوم',
+        infoSectionTitle: 'معلومات مهمة للمشاة' // New text for info section title
       },
       en: {
         heading: '🏴 Arbaeen Processions Guide 🏴',
@@ -543,7 +544,8 @@
         noResults: 'No results found.',
         offlineMessage: 'You are offline. Data might be outdated.',
         columnText: 'Column', // Added for column header
-        dayUnit: 'day'
+        dayUnit: 'day',
+        infoSectionTitle: 'Important Information for Walkers' // New text for info section title
       },
       fa: {
         heading: '🏴 راهنمای موکب‌های اربعین 🏴',
@@ -553,7 +555,8 @@
         noResults: 'نتیجه‌ای یافت نشد.',
         offlineMessage: 'شما آفلاین هستید. ممکن است داده‌ها قدیمی باشند.',
         columnText: 'ستون', // Added for column header
-        dayUnit: 'روز'
+        dayUnit: 'روز',
+        infoSectionTitle: 'اطلاعات مهم برای زائرین' // New text for info section title
       }
     };
 
@@ -588,6 +591,8 @@
       document.getElementById('search').placeholder = texts.searchInput;
       document.getElementById('suggestions').innerHTML = texts.suggestions;
       document.getElementById('offline-message').textContent = texts.offlineMessage;
+      // Update the info section title
+      document.querySelector('#info-section .info-header span:first-child').textContent = texts.infoSectionTitle;
       // Re-render columns to update "العمود" text in headers if language changes
       renderColumns(columnsData); 
     }
