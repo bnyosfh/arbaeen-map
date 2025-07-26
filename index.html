@@ -396,6 +396,19 @@
         background-color: #4a1c1c;
         border-color: #8b0000;
     }
+
+    /* New style for no results message */
+    #no-results-message {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 18px;
+        color: #d32f2f; /* Red color for warning */
+        font-weight: bold;
+        display: none; /* Hidden by default */
+    }
+    body.dark-mode #no-results-message {
+        color: #ff8888;
+    }
   </style>
 </head>
 <body>
@@ -503,8 +516,7 @@
     </div>
   </div>
   <div id="columns-container"></div>
-
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+  <p id="no-results-message" style="display:none;"></p> <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
   <script>
     // Register Service Worker
     if ('serviceWorker' in navigator) {
@@ -569,7 +581,12 @@
         countdownContainer.style.display = 'none';
         return;
       } else {
-        countdownContainer.style.display = 'block'; // Ensure it's visible if search is cleared
+        // Only show countdown if search input is empty
+        if (document.getElementById('search').value.trim() === '') {
+            countdownContainer.style.display = 'block';
+        } else {
+            countdownContainer.style.display = 'none';
+        }
       }
 
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -589,10 +606,13 @@
       document.querySelector('h1').textContent = texts.heading;
       document.getElementById('countdown-title').textContent = texts.countdownTitle;
       document.getElementById('search').placeholder = texts.searchInput;
-      document.getElementById('suggestions').innerHTML = texts.suggestions;
+      // Note: suggestions is handled dynamically in search event listener
+      // document.getElementById('suggestions').innerHTML = texts.suggestions;
       document.getElementById('offline-message').textContent = texts.offlineMessage;
       // Update the info section title
       document.querySelector('#info-section .info-header span:first-child').textContent = texts.infoSectionTitle;
+      // Update no results message
+      document.getElementById('no-results-message').textContent = texts.noResults;
       // Re-render columns to update "العمود" text in headers if language changes
       renderColumns(columnsData); 
     }
@@ -661,8 +681,8 @@
       const container = document.getElementById('columns-container');
       container.innerHTML = '';
       if (data.length === 0) {
-        container.innerHTML = `<p style="text-align:center;">${uiTexts[currentLang].noResults}</p>`;
-        return;
+        // This case is handled by the search event listener for specific no results message
+        return; 
       }
       // Sort by column number before rendering
       data.sort((a, b) => a.column - b.column);
@@ -692,21 +712,27 @@
     document.getElementById('search').addEventListener('input', e => {
       const q = e.target.value.trim();
       const countdownContainer = document.getElementById('countdown-container');
-      const suggestions = document.getElementById('suggestions');
-      const infoSection = document.getElementById('info-section'); // Get info section
+      const suggestionsElement = document.getElementById('suggestions'); // Renamed to avoid conflict
+      const infoSection = document.getElementById('info-section');
+      const noResultsMessage = document.getElementById('no-results-message');
+      const columnsContainer = document.getElementById('columns-container');
+
 
       if (q === '') {
+        // If search input is empty, show everything default
         countdownContainer.style.display = 'block';
-        suggestions.style.display = 'block';
-        infoSection.style.display = 'block'; // Show info section when search is empty
-        renderColumns(columnsData);
+        suggestionsElement.innerHTML = uiTexts[currentLang].suggestions; // Restore suggestions HTML
+        suggestionsElement.style.display = 'block';
+        infoSection.style.display = 'block';
+        noResultsMessage.style.display = 'none'; // Hide no results message
+        renderColumns(columnsData); // Render all columns
         return;
       }
       
+      // If search input has text, hide default sections
       countdownContainer.style.display = 'none';
-      suggestions.style.display = 'none';
-      infoSection.style.display = 'none'; // Hide info section when searching
-
+      infoSection.style.display = 'none';
+      
       let filteredResults = [];
       if (fuse) {
           const searchResults = fuse.search(q);
@@ -725,6 +751,17 @@
       }
       
       renderColumns(filteredResults);
+
+      if (filteredResults.length === 0) {
+          noResultsMessage.textContent = uiTexts[currentLang].noResults;
+          noResultsMessage.style.display = 'block'; // Show "No results"
+          suggestionsElement.innerHTML = uiTexts[currentLang].suggestions; // Keep suggestions visible
+          suggestionsElement.style.display = 'block';
+          columnsContainer.innerHTML = ''; // Clear columns to only show messages
+      } else {
+          noResultsMessage.style.display = 'none'; // Hide "No results"
+          suggestionsElement.style.display = 'none'; // Hide suggestions if results are shown
+      }
 
       // Scroll to the first result if there's only one column number match
       if (filteredResults.length === 1 && !isNaN(q) && filteredResults[0].column.toString() === q) {
