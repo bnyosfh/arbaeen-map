@@ -147,19 +147,23 @@
             color: #ff6666;
         }
 
-        /* NEW COUNTDOWN STYLES - MODIFIED FOR MOBILE WRAPPING */
+        /* UPDATED COUNTDOWN STYLES - FORCED SINGLE ROW WITH HORIZONTAL SCROLL */
         #countdown {
-            display: flex;
-            justify-content: center;
-            gap: 12px; /* Space between units */
-            flex-wrap: wrap; /* Allow units to wrap on smaller screens */
+            display: flex; /* Always display as a flex row */
+            justify-content: center; /* Center horizontally */
+            gap: 8px; /* Reduced gap slightly for smaller screens */
+            overflow-x: auto; /* Allow horizontal scrolling if content overflows */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            padding-bottom: 5px; /* Add some padding for scrollbar if it appears */
+            white-space: nowrap; /* Keep content in a single line */
         }
         .countdown-unit {
             background-color: #f0f0f0;
             border: 1px solid #ddd;
             border-radius: 8px;
-            padding: 12px 15px;
-            min-width: 70px; /* Base min-width */
+            padding: 8px 10px; /* Reduced padding */
+            min-width: 65px; /* Reduced min-width to try and fit all */
+            max-width: 80px; /* Optional: cap max width */
             text-align: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.08);
             display: flex;
@@ -167,37 +171,27 @@
             align-items: center;
             justify-content: center;
             transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+            flex-shrink: 0; /* Prevent shrinking when space is tight */
+            flex-grow: 0; /* Prevent growing too much */
         }
 
         /* Responsive adjustments for countdown units */
         @media (max-width: 480px) { /* For small phones */
             .countdown-unit {
-                flex-basis: calc(50% - 10px); /* Two items per row, accounting for gap */
-                max-width: calc(50% - 10px); /* Ensure it doesn't grow too wide */
-                padding: 10px 12px; /* Slightly less padding */
-                min-width: unset; /* Remove min-width to allow flex-basis to control */
+                padding: 6px 8px; /* Further reduced padding for very small screens */
+                min-width: 60px; /* Even smaller min-width */
             }
             .countdown-value {
-                font-size: 1.8em; /* Slightly smaller font for values */
+                font-size: 1.6em; /* Smaller font for values */
             }
             .countdown-label {
-                font-size: 0.8em; /* Slightly smaller font for labels */
+                font-size: 0.7em; /* Smaller font for labels */
             }
             #countdown {
-                gap: 8px; /* Smaller gap on small screens */
+                gap: 5px; /* Very small gap */
             }
         }
-        @media (min-width: 481px) and (max-width: 600px) { /* For larger phones/small tablets */
-             .countdown-unit {
-                flex-basis: calc(25% - 10px); /* Four items per row if space allows */
-                max-width: calc(25% - 10px);
-                min-width: 70px; /* Keep a reasonable min-width */
-            }
-            #countdown {
-                gap: 8px;
-            }
-        }
-        /* End Responsive adjustments */
+        /* END UPDATED COUNTDOWN STYLES */
 
 
         body.dark-mode .countdown-unit {
@@ -225,7 +219,6 @@
         body.dark-mode .countdown-label {
             color: #bbb;
         }
-        /* END NEW COUNTDOWN STYLES */
 
 
         /* --- NEW COLLAPSIBLE INFO SECTION STYLES --- */
@@ -809,7 +802,7 @@
                     walkInstructions: '📌 دستورالعمل‌های عمومی پیاده‌روی',
                     itemsToCarry: '🎒 وسایل و ملزومات پیشنهادی',
                     importantNotes: '📍 نکات مهم',
-                    recommendations: '🔰 توصیه‌ها'
+                    recommendations: '🔰 توصیه ها'
                 }
             }
         };
@@ -1038,7 +1031,7 @@
             document.body.classList.add('dark-mode');
         }
 
-        // NEW JS FOR COLLAPSIBLE INFO SECTION AND SUB-SECTIONS - MODIFIED FOR SCROLLING
+        // JS FOR COLLAPSIBLE INFO SECTION AND SUB-SECTIONS - MODIFIED FOR SCROLLING
         document.addEventListener('DOMContentLoaded', () => {
             const toggleCollapsible = (header) => {
                 const content = header.nextElementSibling;
