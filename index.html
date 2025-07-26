@@ -147,7 +147,7 @@
             color: #ff6666;
         }
 
-        /* NEW COUNTDOWN STYLES */
+        /* NEW COUNTDOWN STYLES - MODIFIED FOR MOBILE WRAPPING */
         #countdown {
             display: flex;
             justify-content: center;
@@ -159,7 +159,7 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             padding: 12px 15px;
-            min-width: 70px; /* Ensure consistent width */
+            min-width: 70px; /* Base min-width */
             text-align: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.08);
             display: flex;
@@ -168,6 +168,38 @@
             justify-content: center;
             transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
         }
+
+        /* Responsive adjustments for countdown units */
+        @media (max-width: 480px) { /* For small phones */
+            .countdown-unit {
+                flex-basis: calc(50% - 10px); /* Two items per row, accounting for gap */
+                max-width: calc(50% - 10px); /* Ensure it doesn't grow too wide */
+                padding: 10px 12px; /* Slightly less padding */
+                min-width: unset; /* Remove min-width to allow flex-basis to control */
+            }
+            .countdown-value {
+                font-size: 1.8em; /* Slightly smaller font for values */
+            }
+            .countdown-label {
+                font-size: 0.8em; /* Slightly smaller font for labels */
+            }
+            #countdown {
+                gap: 8px; /* Smaller gap on small screens */
+            }
+        }
+        @media (min-width: 481px) and (max-width: 600px) { /* For larger phones/small tablets */
+             .countdown-unit {
+                flex-basis: calc(25% - 10px); /* Four items per row if space allows */
+                max-width: calc(25% - 10px);
+                min-width: 70px; /* Keep a reasonable min-width */
+            }
+            #countdown {
+                gap: 8px;
+            }
+        }
+        /* End Responsive adjustments */
+
+
         body.dark-mode .countdown-unit {
             background-color: #3b3b3b;
             border-color: #555;
@@ -261,7 +293,7 @@
             font-size: 16px;
             line-height: 1.8;
             max-height: 0; /* Initially hidden */
-            overflow: hidden;
+            overflow: hidden; /* Only hide initially, control dynamically via JS */
             transition: max-height 0.4s ease-out, padding 0.4s ease-out;
         }
         body.dark-mode .info-content {
@@ -317,7 +349,7 @@
 
         .sub-info-content {
             max-height: 0;
-            overflow: hidden;
+            overflow: hidden; /* Only hide initially, control dynamically via JS */
             transition: max-height 0.4s ease-out, padding 0.4s ease-out;
             padding: 0 0; /* Initial padding */
             color: #333; /* Consistent text color */
@@ -1006,27 +1038,38 @@
             document.body.classList.add('dark-mode');
         }
 
-        // NEW JS FOR COLLAPSIBLE INFO SECTION AND SUB-SECTIONS
+        // NEW JS FOR COLLAPSIBLE INFO SECTION AND SUB-SECTIONS - MODIFIED FOR SCROLLING
         document.addEventListener('DOMContentLoaded', () => {
             const toggleCollapsible = (header) => {
                 const content = header.nextElementSibling;
                 header.classList.toggle('expanded');
-                if (content.style.maxHeight) {
-                    content.style.maxHeight = null;
-                    // Adjust padding for collapsed state based on whether it's main or sub content
+                if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                    // Currently expanded, collapse it
+                    content.style.maxHeight = null; // Reset to 0 indirectly via transition
+                    content.style.overflowY = 'hidden'; // Hide overflow immediately
+                    // Adjust padding for collapsed state
                     if (header.classList.contains('info-header')) {
                         content.style.padding = '0 20px';
                     } else if (header.classList.contains('sub-info-header')) {
                         content.style.padding = '0 0';
                     }
                 } else {
-                    content.style.maxHeight = content.scrollHeight + 'px';
+                    // Currently collapsed, expand it
+                    content.style.maxHeight = '9999px'; // Use a large value for full expansion
                     // Adjust padding for expanded state
                     if (header.classList.contains('info-header')) {
                         content.style.padding = '15px 20px';
                     } else if (header.classList.contains('sub-info-header')) {
                         content.style.padding = '15px 0 0 0'; // Top padding for sub-content
                     }
+                    // Allow scroll after transition, if content exceeds height
+                    // We need a slight delay to allow max-height transition to complete
+                    setTimeout(() => {
+                        // Check if content height is actually larger than its visible area
+                        if (content.scrollHeight > content.clientHeight) {
+                            content.style.overflowY = 'auto'; // Enable scroll if needed
+                        }
+                    }, 400); // Match this timeout with CSS transition duration
                 }
             };
 
