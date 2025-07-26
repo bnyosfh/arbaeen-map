@@ -368,6 +368,12 @@
       height: 45px; /* Slightly larger logo */
       width: auto;
       display: block;
+      /* Add this filter for dark mode */
+      transition: filter 0.3s ease-in-out; /* Smooth transition for the filter */
+    }
+    body.dark-mode #logo-container img {
+      filter: invert(1) hue-rotate(180deg) brightness(1.2); /* Invert colors for dark mode */
+      /* invert(1) turns black to white, hue-rotate(180deg) adjusts hues, brightness(1.2) makes it brighter */
     }
     #logo-container span {
       color: #000;
